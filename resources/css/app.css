@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* 
+ * ⚔️ Game of Thrones: Conquest of Winter ⚔️
+ * Master Theme System
+ */
+
+@theme {
+  --font-sans: 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
+  --font-cinzel: 'Cinzel', serif;
+}
+
+@layer base {
+  /* ICE THEME (Default) */
+  :root, .theme-ice {
+    --bg-primary: #050811;
+    --bg-secondary: rgba(8, 16, 32, 0.85);
+    --panel-bg: rgba(10, 22, 44, 0.7);
+    --panel-border: rgba(56, 189, 248, 0.25);
+    
+    --text-primary: #f0f9ff;
+    --text-secondary: #bae6fd;
+    --text-accent: #38bdf8;
+    
+    --accent-color: #0ea5e9;
+    --accent-glow: rgba(14, 165, 233, 0.45);
+    --accent-hover: #0284c7;
+    
+    --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+    --gradient-glow: 0 0 25px rgba(14, 165, 233, 0.6);
+    --card-glow-active: 0 0 20px rgba(56, 189, 248, 0.35);
+  }
+
+  /* FIRE THEME */
+  .theme-fire {
+    --bg-primary: #0a0303;
+    --bg-secondary: rgba(22, 6, 6, 0.85);
+    --panel-bg: rgba(28, 8, 8, 0.7);
+    --panel-border: rgba(249, 115, 22, 0.25);
+    
+    --text-primary: #fff7ed;
+    --text-secondary: #fed7aa;
+    --text-accent: #fb923c;
+    
+    --accent-color: #ea580c;
+    --accent-glow: rgba(234, 88, 12, 0.45);
+    --accent-hover: #c2410c;
+    
+    --gradient-primary: linear-gradient(135deg, #ea580c 0%, #c2410c 50%, #9a3412 100%);
+    --gradient-glow: 0 0 25px rgba(234, 88, 12, 0.6);
+    --card-glow-active: 0 0 20px rgba(249, 115, 22, 0.35);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-cinzel {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer components {
+  /* Frosted Glass Panels */
+  .got-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .got-panel:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.7), 0 0 15px var(--accent-glow);
+  }
+
+  /* Runic/Combat Sigil Cards */
+  .sigil-card {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, var(--panel-bg) 100%);
+    border: 1px solid var(--panel-border);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sigil-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gradient-primary);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .sigil-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--accent-color);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8), var(--card-glow-active);
+  }
+  
+  .sigil-card:hover::before {
+    height: 5px;
+    opacity: 1;
+  }
+
+  /* Ancient Royal Parchment Scroll */
+  .parchment-scroll {
+    background: linear-gradient(135deg, #f5ecd5 0%, #e6d3ab 50%, #d5bf92 100%);
+    color: #2b1d0c;
+    border: 2px solid #5a4120;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(90, 65, 32, 0.2);
+    position: relative;
+    border-radius: 4px;
+    padding: 1.5rem;
+    font-family: 'Rajdhani', sans-serif;
+  }
+  
+  .parchment-title {
+    color: #4a2f0f;
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+    border-bottom: 2px dashed rgba(90, 65, 32, 0.4);
+  }
+  
+  .parchment-item {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(90, 65, 32, 0.2);
+    transition: all 0.25s ease;
+  }
+  
+  .parchment-item:hover {
+    background: rgba(255, 255, 255, 0.45);
+    border-color: #5a4120;
+    transform: translateX(4px);
+  }
+
+  /* Input Fields */
+  .got-input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--panel-border);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .got-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  /* Buttons */
+  .got-btn {
+    background: var(--gradient-primary);
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 2rem;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .got-btn:hover {
+    box-shadow: var(--gradient-glow), 0 6px 20px rgba(0,0,0,0.5);
+    transform: translateY(-2px);
+  }
+  
+  .got-btn:active {
+    transform: translateY(0px);
+  }
+  
+  /* Outline Button */
+  .got-btn-outline {
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--text-accent);
+    border: 1px solid var(--accent-color);
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+  
+  .got-btn-outline:hover {
+    background: var(--accent-glow);
+    color: white;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.75; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.25) drop-shadow(0 0 8px var(--accent-glow)); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scroll-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255,215,0,0.2); }
+  50% { box-shadow: 0 0 25px rgba(255,215,0,0.45); }
+}
+.animate-scroll-glow {
+  animation: scroll-glow 4s infinite ease-in-out;
+}
+
