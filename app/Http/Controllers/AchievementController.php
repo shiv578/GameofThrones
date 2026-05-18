@@ -10,7 +10,7 @@ use App\Models\Achievement;
 use App\Models\UserAchievement;
 use App\Models\ActivityLog;
 
-class AchievementController extends Controller
+ class AchievementController extends Controller
 {
     public function index()
     {
