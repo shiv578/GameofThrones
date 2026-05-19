@@ -48,7 +48,7 @@
             z-index: -1;
             pointer-events: none;
         }
-    </style>
+    </style> 
 </head>
 <body class="antialiased min-h-screen relative flex flex-col justify-between py-6 px-4 sm:px-6 lg:px-8 text-[var(--text-primary)]">
     
