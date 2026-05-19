@@ -12,7 +12,7 @@ class GameController extends Controller
 {
     public function index()
     {
-        $categories = ['brain', 'puzzle', 'quiz', 'strategy', 'memory'];
+        $categories = ['brain', 'puzzle', 'quiz', 'strategy', 'memory', 'toys'];
         $games = Game::all()->groupBy('category');
         return view('games.index', compact('games', 'categories'));
     }

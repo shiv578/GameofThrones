@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Game of Thrones: Conquest of Winter</title>
-
+<title>Conquest of Winter</title>
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,8 +59,6 @@
     <!-- Header Navigation -->
     <header class="w-full max-w-7xl mx-auto flex justify-between items-center z-10 py-4">
         <div class="flex items-center space-x-3">
-            <i class="fa-solid fa-dragon text-3xl text-[var(--text-accent)]"></i>
-            <span class="font-cinzel font-bold text-lg tracking-wider hidden sm:inline">Conquest of Winter</span>
         </div>
         
         <div class="flex items-center space-x-4">
@@ -86,7 +84,7 @@
     <!-- Main Hero Content -->
     <main class="w-full max-w-4xl mx-auto text-center my-auto z-10 gs-reveal">
         <h2 class="text-xs uppercase tracking-[0.4em] text-[var(--text-accent)] font-bold mb-4">
-            323RK TOYS & GAMES CHALLENGE PRESENTS
+            A TOYS AND GAMES PLATFORM
         </h2>
         
         <h1 class="text-5xl sm:text-7xl md:text-8xl font-cinzel font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">

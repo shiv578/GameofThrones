@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Conquest of Winter') }}</title>
+<link rel="icon" href="{{ asset('favicon.ico') }}?v=3">
+
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -143,8 +145,10 @@
         <!-- Sidebar -->
         <aside class="got-sidebar w-64 flex-shrink-0 flex flex-col hidden md:flex h-full relative z-20">
             <div class="p-6 flex items-center justify-center border-b border-[var(--panel-border)]">
-                <i class="fa-solid fa-dragon text-3xl text-[var(--text-accent)] mr-3"></i>
-                <h2 class="font-cinzel font-bold text-xl leading-tight">Conquest of<br>Winter</h2>
+<img src="{{ asset('favicon.ico') }}"
+     alt="Logo"
+     class="w-10 h-10 rounded-full object-cover mr-3">
+                     <h2 class="font-cinzel font-bold text-xl leading-tight">Conquest of<br>Winter</h2>
             </div>
             
             <div class="flex-1 overflow-y-auto py-4 space-y-1">
@@ -193,10 +197,19 @@
                 <a href="{{ route('games.index') }}#memory" class="nav-item">
                     <i class="fa-solid fa-eye nav-icon"></i> Memory Challenge
                 </a>
-                <div class="space-y-1 mb-4">
+                <div class="space-y-1 mb-2">
                     <a href="{{ route('games.show', 'memory-flip') }}" class="nav-sub-item {{ request()->is('games/memory-flip') ? 'active' : '' }}">Memory Flip</a>
                     <a href="{{ route('games.show', 'sequence-recall') }}" class="nav-sub-item {{ request()->is('games/sequence-recall') ? 'active' : '' }}">Sequence Recall</a>
                     <a href="{{ route('games.show', 'hidden-object') }}" class="nav-sub-item {{ request()->is('games/hidden-object') ? 'active' : '' }}">Hidden Object</a>
+                </div>
+
+                <a href="{{ route('games.index') }}#toys" class="nav-item">
+                    <i class="fa-solid fa-gamepad nav-icon"></i> Toys Games
+                </a>
+                <div class="space-y-1 mb-4">
+                    <a href="{{ route('games.show', 'toys-game-1') }}" class="nav-sub-item {{ request()->is('games/toys-game-1') ? 'active' : '' }}">Toys Game 1</a>
+                    <a href="{{ route('games.show', 'toys-game-2') }}" class="nav-sub-item {{ request()->is('games/toys-game-2') ? 'active' : '' }}">Toys Game 2</a>
+                    <a href="{{ route('games.show', 'toys-game-3') }}" class="nav-sub-item {{ request()->is('games/toys-game-3') ? 'active' : '' }}">Toys Game 3</a>
                 </div>
                 
                 <div class="px-4 py-2 mt-4 mb-2 text-xs uppercase tracking-wider text-[var(--text-secondary)] font-bold">Competition</div>

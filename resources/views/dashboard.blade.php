@@ -13,8 +13,9 @@
         <!-- Inner content -->
         <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
             <div class="mb-3 animate-float">
-                <i class="fa-solid fa-dragon text-5xl text-[var(--text-accent)] drop-shadow-[0_0_20px_var(--accent-glow)]"></i>
-            </div>
+<img src="{{ asset('favicon.ico') }}"
+     alt="Logo"
+     class="w-14 h-14 rounded-full object-cover drop-shadow-[0_0_20px_var(--accent-glow)]">            </div>
             
             <!-- Runic welcome border -->
             <div class="border-y border-[var(--panel-border)]/45 py-2 px-6 mb-4">
@@ -230,17 +231,25 @@
                     <div class="space-y-4">
                         <!-- Quest 1 -->
                         <div class="parchment-item p-4 rounded flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 rounded-full bg-[#4a2f0f]/15 border border-[#5a4120]/60 flex items-center justify-center mr-4">
-                                    <i class="fa-solid fa-brain text-[#4a2f0f]"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-cinzel font-bold text-[#2b1d0c] text-sm tracking-wide">Mind Sharpener</h4>
-                                    <p class="text-xs text-[#623e16] tracking-wide font-medium">Solve 3 runic patterns or IQ tests today</p>
-                                </div>
-                            </div>
+                <div class="flex items-center gap-3 px-4 py-3">
+
+    <img src="{{ asset('favicon.ico') }}"
+         alt="Logo"
+         class="w-10 h-10 rounded-full object-cover shadow-[0_0_15px_rgba(255,80,0,0.6)]">
+
+    <div class="leading-tight">
+        <h1 class="text-2xl font-bold text-white">
+            Conquest of
+        </h1>
+        <h1 class="text-2xl font-bold text-white">
+            Winter
+        </h1>
+    </div>
+
+</div>
                             <div class="text-right">
-                                <div class="text-xs font-black text-[#854d0e] mb-1 font-cinzel flex items-center justify-end"><i class="fa-solid fa-star text-xs mr-1"></i> +50 XP</div>
+                                <div class="text-xs font-black text-[#854d0e] mb-1 font-cinzel flex items-center justify-end">
+                                    <i class="fa-solid fa-star text-xs mr-1"></i> +50 XP</div>
                                 <div class="w-24 h-2 bg-[#d97706]/10 rounded-full overflow-hidden border border-[#5a4120]/30 shadow-inner">
                                     <div class="bg-[#854d0e] h-full w-[33%]"></div>
                                 </div>

@@ -54,6 +54,13 @@ class DatabaseSeeder extends Seeder
             ['slug' => 'memory-flip', 'name' => 'Memory Flip', 'category' => 'memory', 'description' => 'Match pairs of sigils and dragons.', 'difficulty' => 'easy'],
             ['slug' => 'sequence-recall', 'name' => 'Sequence Recall', 'category' => 'memory', 'description' => 'Remember the growing sequence of colors.', 'difficulty' => 'medium'],
             ['slug' => 'hidden-object', 'name' => 'Hidden Object', 'category' => 'memory', 'description' => 'Find the items hidden in the grand hall.', 'difficulty' => 'medium'],
+
+            // Toys Games
+            ['slug' => 'toys-game-1', 'name' => 'Toys Game 1', 'category' => 'toys', 'description' => 'First toys game.', 'difficulty' => 'easy'],
+            ['slug' => 'toys-game-2', 'name' => 'Toys Game 2', 'category' => 'toys', 'description' => 'Second toys game.', 'difficulty' => 'medium'],
+            ['slug' => 'toys-game-3', 'name' => 'Toys Game 3', 'category' => 'toys', 'description' => 'Third toys game.', 'difficulty' => 'hard'],
+            ['slug' => 'car-racing', 'name' => 'Car Racing', 'category' => 'toys', 'description' => 'Race the toy car to the finish line.', 'difficulty' => 'medium'],
+            ['slug' => 'find-difference', 'name' => 'Find Difference', 'category' => 'toys', 'description' => 'Spot the differences between the two scenes.', 'difficulty' => 'medium'],
         ];
 
         foreach ($games as $game) {
