@@ -47,11 +47,16 @@
                     @endif
                 </div>
 
-                <div class="pt-4">
-                    <button class="got-btn w-full rounded-lg text-lg py-4">
-                        <i class="fa-solid fa-dragon mr-2"></i> Log In
-                    </button>
-                </div>
+              <div class="pt-6">
+<button type="submit" class="dragon-login-btn w-[220px] mx-auto block">
+            <span class="dragon-glow"></span>
+
+        <span class="dragon-content">
+            <i class="fa-solid fa-dragon dragon-icon"></i>
+            <span class="dragon-text">LOG IN</span>
+        </span>
+    </button>
+</div>
                 
                 <div class="text-center mt-6">
                     <p class="text-[var(--text-secondary)]">New to the realm?</p>

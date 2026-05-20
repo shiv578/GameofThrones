@@ -3,9 +3,12 @@
     <!-- Hero Banner -->
     <div class="relative w-full h-80 rounded-2xl overflow-hidden mb-8 shadow-[0_15px_40px_rgba(0,0,0,0.7)] border border-[var(--panel-border)] group" data-aos="fade-up">
         <!-- Raging split background -->
-        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" 
-             style="background-image: url('/images/dragons-bg.png');">
-        </div>
+     <div class="absolute inset-0 bg-cover transition-transform duration-1000 group-hover:scale-105" 
+     style="
+        background-image: url('/images/dragons-bg.png');
+        background-position: center 20%;
+     ">
+</div>
         <!-- Vignette & Theme responsive overlay mask -->
         <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/75"></div>
         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.9)_100%)]"></div>

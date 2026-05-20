@@ -133,6 +133,8 @@
             text-shadow: 0 0 5px var(--accent-glow);
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="antialiased min-h-screen text-[var(--text-primary)]">
     

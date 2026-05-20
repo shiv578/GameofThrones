@@ -56,24 +56,75 @@
                     </div>
                 </div>
 
-                <!-- STEP 2: Allegiance -->
-                <div x-show="step === 2" style="display: none;" x-transition.opacity.duration.500ms>
-                    <div class="grid grid-cols-2 gap-4">
-                        <template x-for="h in ['Stark', 'Targaryen', 'Lannister', 'Baratheon']">
-                            <div @click="house = h" 
-                                 class="got-panel p-4 cursor-pointer text-center rounded-xl border-2 transition-all"
-                                 :class="house === h ? 'border-[var(--accent-color)] shadow-[0_0_15px_var(--accent-glow)] scale-105' : 'border-transparent hover:border-[var(--panel-border)]'">
-                                <i class="fa-brands fa-d-and-d text-4xl mb-2" :class="house === h ? 'text-[var(--accent-color)]' : 'text-gray-400'"></i>
-                                <h3 class="font-cinzel text-xl font-bold" x-text="h"></h3>
-                            </div>
-                        </template>
-                    </div>
+      <!-- STEP 2: Allegiance -->
+<div x-show="step === 2" style="display: none;" x-transition.opacity.duration.500ms>
 
-                    <div class="pt-8 flex justify-between">
-                        <button type="button" @click="step = 1" class="got-btn-outline rounded-lg px-6"><i class="fa-solid fa-arrow-left mr-2"></i> Back</button>
-                        <button type="button" @click="if(house) step = 3; else alert('Please choose a house');" class="got-btn rounded-lg px-6">Next <i class="fa-solid fa-arrow-right ml-2"></i></button>
-                    </div>
-                </div>
+   <div class="houses-grid">
+
+    <!-- STARK -->
+    <div>
+        <div @click="house = 'Stark'"
+            class="house-card cursor-pointer"
+            :class="house === 'Stark' ? 'active-house' : ''">
+
+            <img src="{{ asset('images/stark.png') }}" class="house-logo" alt="">
+        </div>
+
+        <h2 class="house-name">STARK</h2>
+    </div>
+
+    <!-- LANNISTER -->
+    <div>
+        <div @click="house = 'Lannister'"
+            class="house-card cursor-pointer"
+            :class="house === 'Lannister' ? 'active-house' : ''">
+
+            <img src="{{ asset('images/lannister.png') }}" class="house-logo" alt="">
+        </div>
+
+        <h2 class="house-name">LANNISTER</h2>
+    </div>
+
+    <!-- TARGARYEN -->
+    <div>
+        <div @click="house = 'Targaryen'"
+            class="house-card cursor-pointer"
+            :class="house === 'Targaryen' ? 'active-house' : ''">
+
+            <img src="{{ asset('images/targaryen.png') }}" class="house-logo" alt="">
+        </div>
+
+        <h2 class="house-name">TARGARYEN</h2>
+    </div>
+
+    <!-- BARATHEON -->
+    <div>
+        <div @click="house = 'Baratheon'"
+            class="house-card cursor-pointer"
+            :class="house === 'Baratheon' ? 'active-house' : ''">
+
+            <img src="{{ asset('images/baratheon.png') }}" class="house-logo" alt="">
+        </div>
+
+        <h2 class="house-name">BARATHEON</h2>
+    </div>
+
+</div>
+
+    <div class="pt-8 flex justify-between">
+        <button type="button" @click="step = 1"
+            class="got-btn-outline rounded-lg px-6">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Back
+        </button>
+
+        <button type="button"
+            @click="if(house) step = 3; else alert('Please choose a house');"
+            class="got-btn rounded-lg px-6">
+            Next <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+    </div>
+
+</div>
 
                 <!-- STEP 3: Character Class -->
                 <div x-show="step === 3" style="display: none;" x-transition.opacity.duration.500ms>
