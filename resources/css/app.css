@@ -10,6 +10,193 @@
   --font-cinzel: 'Cinzel', serif;
 }
 
+
+.image-login-btn{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: auto;
+    margin-top: -35px;
+
+    transition: 0.3s ease;
+}
+
+.image-login-btn img{
+    width: 250px;
+    height: auto;
+
+    transition: 0.3s ease;
+}
+
+
+/* FIRE THEME GLOW */
+.theme-fire .image-login-btn img{
+
+    filter:
+      drop-shadow(0 0 20px rgba(255,80,0,0.8))
+      drop-shadow(0 0 40px rgba(255,120,0,0.5));
+}
+
+.theme-fire .image-login-btn:hover img{
+
+    filter:
+      drop-shadow(0 0 12px #ff4500)
+      drop-shadow(0 0 25px #ff6600)
+      drop-shadow(0 0 45px #ff2200)
+      brightness(1.2);
+}
+
+/* =========================
+   FIRE TEXT EFFECT
+========================= */
+
+.fire-text {
+
+    background:
+        linear-gradient(
+            to bottom,
+            #fff8dc 0%,
+            #ffd27a 20%,
+            #ffae42 40%,
+            #ff6a00 65%,
+            #ff2200 100%
+        );
+
+    background-size: 100% 200%;
+
+    -webkit-background-clip: text;
+-webkit-text-fill-color: #fff2d8;
+text-shadow:
+        0 0 3px rgba(255,180,100,0.35),
+        0 0 8px rgba(255,120,0,0.18);
+
+    caret-color: #ffd27a;
+
+    font-family: 'Cinzel', serif;
+
+    letter-spacing: 1px;
+
+    animation: fireGlow 2s infinite alternate;
+}
+
+
+/* =========================
+   ICE TEXT EFFECT
+========================= */
+
+.ice-text {
+
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff 0%,
+            #e0f7ff 20%,
+            #bfefff 40%,
+            #7dd3fc 70%,
+            #38bdf8 100%
+        );
+
+    background-size: 100% 200%;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 0 3px rgba(255,255,255,0.9),
+        0 0 8px rgba(125,211,252,0.9),
+        0 0 16px rgba(56,189,248,0.8),
+        0 0 28px rgba(14,165,233,0.7),
+        0 0 45px rgba(59,130,246,0.5);
+
+    caret-color: #e0f7ff;
+
+    font-family: 'Cinzel', serif;
+
+    letter-spacing: 1px;
+
+    animation: iceGlow 2s infinite alternate;
+}
+
+
+/* =========================
+   FIRE ANIMATION
+========================= */
+
+@keyframes fireGlow {
+
+    from {
+
+        text-shadow:
+            0 0 2px rgba(255,180,80,0.8),
+            0 0 8px rgba(255,100,0,0.8),
+            0 0 18px rgba(255,50,0,0.7);
+
+        transform: scale(1);
+    }
+
+    to {
+
+        text-shadow:
+            0 0 4px rgba(255,220,120,1),
+            0 0 14px rgba(255,120,0,1),
+            0 0 28px rgba(255,60,0,0.9),
+            0 0 50px rgba(255,0,0,0.8);
+
+        transform: scale(1.01);
+    }
+}
+
+
+/* =========================
+   ICE ANIMATION
+========================= */
+
+@keyframes iceGlow {
+
+    from {
+
+        text-shadow:
+            0 0 3px rgba(255,255,255,0.9),
+            0 0 10px rgba(125,211,252,0.8),
+            0 0 18px rgba(56,189,248,0.7);
+
+        transform: scale(1);
+    }
+
+    to {
+
+        text-shadow:
+            0 0 5px rgba(255,255,255,1),
+            0 0 16px rgba(191,239,255,1),
+            0 0 30px rgba(56,189,248,0.9),
+            0 0 55px rgba(14,165,233,0.8);
+
+        transform: scale(1.01);
+    }
+}
+
+.typing-particle {
+
+    position: fixed;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 999px;
+
+    pointer-events: none;
+
+    z-index: 9999;
+}
+.image-login-btn:active img{
+    transform: scale(0.97);
+}
+
 .houses-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -347,19 +534,19 @@ background:
 
 @layer components {
   /* Frosted Glass Panels */
-  .got-panel {
-    background: var(--panel-bg);
+.got-panel {
+    background: transparent;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--panel-border);
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.6);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+    border: none;
+    box-shadow: 0 10px 40px 0 rgba(100, 50, 0, 0.6);
+}
+  /*jjjjjjjjjjjjj*/
   
-  .got-panel:hover {
-    border-color: var(--accent-color);
-    box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.7), 0 0 15px var(--accent-glow);
-  }
+.got-panel:hover {
+    transform: none;
+    box-shadow: 0 10px 40px 0 rgba(200, 50, 0, 0.6);
+}
 
   /* Runic/Combat Sigil Cards */
   .sigil-card {
@@ -514,4 +701,145 @@ background:
 .animate-scroll-glow {
   animation: scroll-glow 4s infinite ease-in-out;
 }
+
+
+/* LABELS */
+
+.theme-fire label {
+
+    color: #ffe8c2 !important;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    text-shadow:
+        0 0 4px rgba(255,140,0,0.6),
+        0 0 10px rgba(255,80,0,0.35);
+
+    letter-spacing: 1px;
+}
+
+
+/* INPUT BOX */
+
+.theme-fire .got-input {
+
+    background: rgba(0,0,0,0.18) !important;
+
+border: 1px solid rgba(100,170,70,0.95) !important;
+    color: #fff2d2 !important;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    padding: 14px 18px;
+
+    border-radius: 12px;
+
+box-shadow:
+    0 0 8px rgba(255,140,0,0.65),
+    0 0 18px rgba(255,90,0,0.35),
+    inset 0 0 8px rgba(100,120,0,0.10);
+
+}
+
+
+/* INPUT TEXT */
+
+
+/* PLACEHOLDER */
+.theme-fire .got-input::placeholder {
+    color: rgba(255,220,170,0.22);
+font-size: 11px;
+    text-shadow:
+        0 0 2px rgba(255,120,0,0.06);
+
+filter: none;
+    opacity: 1;
+}
+
+/* INPUT FOCUS */
+
+.theme-fire .got-input:focus {
+    outline: none;
+
+    border-color: rgba(255,150,40,0.7) !important;
+
+    box-shadow:
+        0 0 16px rgba(255,120,0,0.28),
+        inset 0 0 10px rgba(255,90,0,0.12);
+}
+
+
+/* REMEMBER + FORGOT */
+
+.theme-fire span,
+.theme-fire a {
+    color: #ffd7a3 !important;
+
+    text-shadow:
+        0 0 4px rgba(255,120,0,0.22);
+}
+
+
+/* FORGOT PASSWORD HOVER */
+
+.theme-fire a:hover {
+
+    color: #fff1d8 !important;
+
+    text-shadow:
+        0 0 10px rgba(255,160,60,0.5);
+}
+#themePanel{
+
+    background-size: cover !important;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+}
+
+
+
+.theme-ice label {
+
+    color: #f0f9ff !important;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+ text-shadow:
+    0 0 4px rgba(255,255,255,0.5),
+    0 0 8px rgba(125,211,252,0.4);
+
+    letter-spacing: 1px;
+}
+.theme-ice .got-input {
+
+border: 2px solid rgba(125,211,252,0.9) !important;
+    box-shadow:
+        0 0 8px rgba(125,211,252,0.45),
+        0 0 18px rgba(56,189,248,0.28),
+        inset 0 0 10px rgba(255,255,255,0.06);
+
+backdrop-filter: none;
+
+    transition: all 0.3s ease;
+}
+
+.theme-ice .got-input:focus {
+border: 2px solid #38bdf8 !important;
+    border-color: #129bdb !important;
+
+    box-shadow:
+        0 0 10px rgba(125,211,252,0.55),
+        0 0 20px rgba(56,189,248,0.35),
+        inset 0 0 10px rgba(255,255,255,0.08);
+}
+
+
 

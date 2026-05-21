@@ -1,7 +1,13 @@
 <x-guest-layout>
     <div x-data="{ step: 1, house: '', charClass: '' }" class="flex items-center justify-center h-full w-full">
-        <div class="got-panel p-8 sm:p-12 w-full max-w-2xl rounded-2xl relative overflow-hidden transition-all duration-500">
-            
+<div 
+class="got-panel mx-auto bg-transparent p-8 sm:p-12 w-full max-w-xl rounded-2xl relative overflow-hidden"    style="
+        background-image: url('{{ asset('images/fire-panel-bg.png') }}');
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+    "
+>      
             <div class="text-center mb-8 relative z-10">
                 <h1 class="text-4xl font-cinzel font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--text-primary)] to-[var(--text-accent)] mb-2">
                     Forge Your Legacy
