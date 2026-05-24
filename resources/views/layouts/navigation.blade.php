@@ -18,6 +18,25 @@
                 </div>
             </div>
 
+            <!-- User Economy / Wallet -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4 mr-4">
+                <div class="flex items-center text-sm font-bold bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full border border-yellow-300 shadow-sm" id="nav-coins">
+                    <i class="fa-solid fa-coins mr-1 text-yellow-600"></i>
+                    <span id="nav-coins-count">{{ number_format(Auth::user()->coins) }}</span>
+                </div>
+                <div class="flex items-center text-sm font-bold bg-blue-100 text-blue-800 px-3 py-1 rounded-full border border-blue-300 shadow-sm" id="nav-diamonds">
+                    <i class="fa-solid fa-gem mr-1 text-blue-600"></i>
+                    <span id="nav-diamonds-count">{{ number_format(Auth::user()->diamonds) }}</span>
+                </div>
+                @php
+                    $unopenedBoxes = \App\Models\UserBox::where('user_id', Auth::id())->where('is_opened', false)->count();
+                @endphp
+                <div class="flex items-center text-sm font-bold bg-purple-100 text-purple-800 px-3 py-1 rounded-full border border-purple-300 shadow-sm cursor-pointer hover:bg-purple-200 transition" onclick="document.getElementById('mystery-box-modal').classList.remove('hidden')" id="nav-boxes">
+                    <i class="fa-solid fa-box-open mr-1 text-purple-600"></i>
+                    <span id="nav-boxes-count">{{ $unopenedBoxes }}</span>
+                </div>
+            </div>
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -85,15 +104,17 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+    <button type="submit" style="background:none;border:none;padding:0;width:100%;cursor:pointer;">
+        <img 
+            src="{{ asset('images/logout-dragon-btn.png') }}" 
+            alt="Logout"
+            style="width:280px;height:auto;display:block;"
+        >
+    </button>
+</form>
             </div>
         </div>
     </div>

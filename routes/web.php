@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
     
     // Analytics
     Route::get('/analytics', [\App\Http\Controllers\AnalyticsController::class, 'index'])->name('analytics.index');
+
+    // Rewards
+    Route::post('/rewards/daily', [\App\Http\Controllers\RewardController::class, 'claimDaily'])->name('rewards.daily');
+    Route::post('/rewards/mystery-box/open', [\App\Http\Controllers\RewardController::class, 'openMysteryBox'])->name('rewards.mystery-box.open');
 });
 
 require __DIR__.'/auth.php';

@@ -27,8 +27,17 @@ class User extends Authenticatable
         'character_class',
         'xp',
         'coins',
+        'diamonds',
         'level',
-        'theme_preference'
+        'rank',
+        'total_login_days',
+        'last_login_date',
+        'login_streak',
+        'current_streak',
+        'avatar_border',
+        'equipped_theme',
+        'theme_preference',
+        'last_reward_claimed_at'
     ];
 
     /**
@@ -51,6 +60,15 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'last_login_date' => 'date',
+            'xp' => 'integer',
+            'coins' => 'integer',
+            'diamonds' => 'integer',
+            'level' => 'integer',
+            'total_login_days' => 'integer',
+            'login_streak' => 'integer',
+            'current_streak' => 'integer',
+            'last_reward_claimed_at' => 'datetime',
         ];
     }
 
@@ -61,4 +79,15 @@ class User extends Authenticatable
     public function notifications() { return $this->hasMany(Notification::class); }
     public function gameSessions() { return $this->hasMany(GameSession::class); }
     public function activityLogs() { return $this->hasMany(ActivityLog::class); }
+
+    // New relationships
+    public function wallet() { return $this->hasOne(Wallet::class); }
+    public function walletTransactions() { return $this->hasMany(WalletTransaction::class); }
+    public function loginStreak() { return $this->hasOne(LoginStreak::class); }
+    public function boxes() { return $this->hasMany(UserBox::class); }
+    public function inventories() { return $this->hasMany(UserInventory::class); }
+    public function purchases() { return $this->hasMany(UserPurchase::class); }
+    public function quests() { return $this->hasMany(UserQuest::class); }
+    public function achievementProgress() { return $this->hasMany(AchievementProgress::class); }
+    public function gameUnlocks() { return $this->hasMany(UserGameUnlock::class); }
 }

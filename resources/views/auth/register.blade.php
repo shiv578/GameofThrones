@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div x-data="{ step: 1, house: '', charClass: '' }" class="flex items-center justify-center h-full w-full">
-<div 
+<div id="themePanel"
 class="got-panel mx-auto bg-transparent p-8 sm:p-12 w-full max-w-xl rounded-2xl relative overflow-hidden"    style="
         background-image: url('{{ asset('images/fire-panel-bg.png') }}');
         background-size: 100% 100%;
@@ -162,3 +162,18 @@ class="got-panel mx-auto bg-transparent p-8 sm:p-12 w-full max-w-xl rounded-2xl 
         </div>
     </div>
 </x-guest-layout>
+<script>
+function updatePanelTheme() {
+    const savedTheme = localStorage.getItem("got_theme") || "fire";
+    const panel = document.getElementById("themePanel");
+    if(panel) {
+        if(savedTheme === "ice") {
+            panel.style.backgroundImage = "url('/images/ice-panel-bg.png')";
+        } else {
+            panel.style.backgroundImage = "url('/images/fire-panel-bg.png')";
+        }
+    }
+}
+window.addEventListener("load", updatePanelTheme);
+setInterval(updatePanelTheme, 500);
+</script>

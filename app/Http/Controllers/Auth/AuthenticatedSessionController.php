@@ -24,11 +24,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $user = $request->authenticate();
 
-        $request->session()->regenerate();
+        $otp = sprintf("%06d", mt_rand(1, 999999));
+        $user->otp = $otp;
+        $user->otp_expires_at = now()->addMinutes(10);
+        $user->save();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\OtpMail($otp));
+
+        $request->session()->put('login_user_id', $user->id);
+        $request->session()->put('login_remember', $request->boolean('remember'));
+
+        return redirect()->route('verify-login-otp');
     }
 
     /**

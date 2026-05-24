@@ -129,6 +129,120 @@
         .nav-sub-item:hover, .nav-sub-item.active {
             color: var(--text-accent);
             border-left: 2px solid var(--accent-color);
+        }
+
+        /* ===== Premium Daily Rewards Button ===== */
+        .daily-reward-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 18px 6px 12px;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d0a0a 30%, #0a1628 70%, #1a0a2e 100%);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #ffd700, #ff8c00, #ffd700, #ff6347, #ffd700) 1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 0 15px rgba(255, 165, 0, 0.3),
+                0 0 30px rgba(255, 69, 0, 0.15),
+                inset 0 1px 0 rgba(255, 215, 0, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+            overflow: visible;
+            font-family: 'Cinzel', serif;
+        }
+        .daily-reward-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.15), transparent 40%, rgba(255,69,0,0.1), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .daily-reward-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow:
+                0 0 25px rgba(255, 165, 0, 0.5),
+                0 0 50px rgba(255, 69, 0, 0.25),
+                0 4px 15px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 215, 0, 0.25);
+        }
+        .daily-reward-btn:hover::before { opacity: 1; }
+        .daily-reward-btn .gift-icon {
+            font-size: 1.6rem;
+            background: linear-gradient(180deg, #ff4500 0%, #8b0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 6px rgba(255, 69, 0, 0.8)) drop-shadow(0 2px 3px rgba(0,0,0,0.6));
+            animation: gift-pulse 2s ease-in-out infinite;
+        }
+        @keyframes gift-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.08) rotate(-3deg); }
+            50% { transform: scale(1) rotate(0deg); }
+            75% { transform: scale(1.05) rotate(3deg); }
+        }
+        .daily-reward-btn .btn-text {
+            font-size: 0.82rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            background: linear-gradient(180deg, #ffd700 0%, #ff8c00 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+        }
+        .daily-reward-btn .notif-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 2px 4px rgba(0,0,0,0.5);
+            animation: badge-bounce 1.5s ease-in-out infinite;
+            z-index: 5;
+        }
+        @keyframes badge-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        .daily-reward-btn.claimed .notif-badge { display: none; }
+        .daily-reward-btn.claimed { opacity: 0.5; pointer-events: none; }
+        .daily-reward-btn.claimed .btn-text {
+            background: linear-gradient(180deg, #888 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== Reward Popup Animations ===== */
+        @keyframes reward-slide-in {
+            from { opacity: 0; transform: scale(0.7) translateY(40px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes reward-coin-rain {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(60px) rotate(360deg); opacity: 0; }
+        }
+        .reward-popup-enter { animation: reward-slide-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .coin-particle {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: reward-coin-rain 1.5s ease-out forwards;
+            pointer-events: none;
+        }
             padding-left: 1.2rem;
             text-shadow: 0 0 5px var(--accent-glow);
         }
@@ -160,60 +274,149 @@
                 
                 <div class="px-4 py-2 mt-4 mb-2 text-xs uppercase tracking-wider text-[var(--text-secondary)] font-bold">Games Arena</div>
                 
-                <a href="{{ route('games.index') }}#brain" class="nav-item">
-                    <i class="fa-solid fa-brain nav-icon"></i> Brain Games
-                </a>
-                <div class="space-y-1 mb-2">
-                    <a href="{{ route('games.show', 'iq-challenge') }}" class="nav-sub-item {{ request()->is('games/iq-challenge') ? 'active' : '' }}">IQ Challenge</a>
-                    <a href="{{ route('games.show', 'pattern-solver') }}" class="nav-sub-item {{ request()->is('games/pattern-solver') ? 'active' : '' }}">Pattern Solver</a>
-                    <a href="{{ route('games.show', 'logic-master') }}" class="nav-sub-item {{ request()->is('games/logic-master') ? 'active' : '' }}">Logic Master</a>
-                </div>
+      <!-- Brain Games -->
+<div x-data="{ openBrain: false }" class="mb-2">
 
-                <a href="{{ route('games.index') }}#puzzle" class="nav-item">
-                    <i class="fa-solid fa-puzzle-piece nav-icon"></i> Puzzle Arena
-                </a>
-                <div class="space-y-1 mb-2">
-                    <a href="{{ route('games.show', 'maze-escape') }}" class="nav-sub-item {{ request()->is('games/maze-escape') ? 'active' : '' }}">Maze Escape</a>
-                    <a href="{{ route('games.show', 'block-puzzle') }}" class="nav-sub-item {{ request()->is('games/block-puzzle') ? 'active' : '' }}">Block Puzzle</a>
-                    <a href="{{ route('games.show', 'treasure-unlock') }}" class="nav-sub-item {{ request()->is('games/treasure-unlock') ? 'active' : '' }}">Treasure Unlock</a>
-                </div>
+    <button
+        @click="openBrain = !openBrain"
+        class="nav-item w-full flex items-center justify-between"
+    >
+        <div class="flex items-center">
+            <i class="fa-solid fa-brain nav-icon"></i>
+            <span>Brain Games</span>
+        </div>
 
-                <a href="{{ route('games.index') }}#quiz" class="nav-item">
-                    <i class="fa-solid fa-clipboard-question nav-icon"></i> Quiz Kingdom
-                </a>
-                <div class="space-y-1 mb-2">
-                    <a href="{{ route('games.show', 'history-quiz') }}" class="nav-sub-item {{ request()->is('games/history-quiz') ? 'active' : '' }}">History Quiz</a>
-                    <a href="{{ route('games.show', 'science-quiz') }}" class="nav-sub-item {{ request()->is('games/science-quiz') ? 'active' : '' }}">Science Quiz</a>
-                    <a href="{{ route('games.show', 'coding-quiz') }}" class="nav-sub-item {{ request()->is('games/coding-quiz') ? 'active' : '' }}">Coding Quiz</a>
-                </div>
+        <i class="fa-solid text-xs"
+           :class="openBrain ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
 
-                <a href="{{ route('games.index') }}#strategy" class="nav-item">
-                    <i class="fa-solid fa-chess-knight nav-icon"></i> Strategy Lab
-                </a>
-                <div class="space-y-1 mb-2">
-                    <a href="{{ route('games.show', 'kingdom-defense') }}" class="nav-sub-item {{ request()->is('games/kingdom-defense') ? 'active' : '' }}">Kingdom Defense</a>
-                    <a href="{{ route('games.show', 'chess-war') }}" class="nav-sub-item {{ request()->is('games/chess-war') ? 'active' : '' }}">Chess War</a>
-                    <a href="{{ route('games.show', 'empire-builder') }}" class="nav-sub-item {{ request()->is('games/empire-builder') ? 'active' : '' }}">Empire Builder</a>
-                </div>
+    <div x-show="openBrain" x-transition class="space-y-1 overflow-hidden">
+        <a href="{{ route('games.show', 'iq-challenge') }}" class="nav-sub-item">IQ Challenge</a>
+        <a href="{{ route('games.show', 'pattern-solver') }}" class="nav-sub-item">Pattern Solver</a>
+        <a href="{{ route('games.show', 'logic-master') }}" class="nav-sub-item">Logic Master</a>
+    </div>
 
-                <a href="{{ route('games.index') }}#memory" class="nav-item">
-                    <i class="fa-solid fa-eye nav-icon"></i> Memory Challenge
-                </a>
-                <div class="space-y-1 mb-2">
-                    <a href="{{ route('games.show', 'memory-flip') }}" class="nav-sub-item {{ request()->is('games/memory-flip') ? 'active' : '' }}">Memory Flip</a>
-                    <a href="{{ route('games.show', 'sequence-recall') }}" class="nav-sub-item {{ request()->is('games/sequence-recall') ? 'active' : '' }}">Sequence Recall</a>
-                    <a href="{{ route('games.show', 'hidden-object') }}" class="nav-sub-item {{ request()->is('games/hidden-object') ? 'active' : '' }}">Hidden Object</a>
-                </div>
+</div>
 
-                <a href="{{ route('games.index') }}#toys" class="nav-item">
-                    <i class="fa-solid fa-gamepad nav-icon"></i> Toys Games
-                </a>
-                <div class="space-y-1 mb-4">
-                    <a href="{{ route('games.show', 'toys-game-1') }}" class="nav-sub-item {{ request()->is('games/toys-game-1') ? 'active' : '' }}">Toys Game 1</a>
-                    <a href="{{ route('games.show', 'toys-game-2') }}" class="nav-sub-item {{ request()->is('games/toys-game-2') ? 'active' : '' }}">Toys Game 2</a>
-                    <a href="{{ route('games.show', 'toys-game-3') }}" class="nav-sub-item {{ request()->is('games/toys-game-3') ? 'active' : '' }}">Toys Game 3</a>
-                </div>
-                
+<!-- Puzzle Arena -->
+<div x-data="{ openPuzzle: false }" class="mb-2">
+
+    <button
+        @click="openPuzzle = !openPuzzle"
+        class="nav-item w-full flex items-center justify-between"
+    >
+        <div class="flex items-center">
+            <i class="fa-solid fa-puzzle-piece nav-icon"></i>
+            <span>Puzzle Arena</span>
+        </div>
+
+        <i class="fa-solid text-xs"
+           :class="openPuzzle ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
+
+    <div x-show="openPuzzle" x-transition class="space-y-1 overflow-hidden">
+        <a href="{{ route('games.show', 'maze-escape') }}" class="nav-sub-item">Maze Escape</a>
+        <a href="{{ route('games.show', 'block-puzzle') }}" class="nav-sub-item">Block Puzzle</a>
+        <a href="{{ route('games.show', 'treasure-unlock') }}" class="nav-sub-item">Treasure Unlock</a>
+    </div>
+
+</div>
+
+<!-- Quiz Kingdom -->
+<div x-data="{ openQuiz: false }" class="mb-2">
+
+    <button
+        @click="openQuiz = !openQuiz"
+        class="nav-item w-full flex items-center justify-between"
+    >
+        <div class="flex items-center">
+            <i class="fa-solid fa-clipboard-question nav-icon"></i>
+            <span>Quiz Kingdom</span>
+        </div>
+
+        <i class="fa-solid text-xs"
+           :class="openQuiz ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
+
+    <div x-show="openQuiz" x-transition class="space-y-1 overflow-hidden">
+        <a href="{{ route('games.show', 'history-quiz') }}" class="nav-sub-item">History Quiz</a>
+        <a href="{{ route('games.show', 'science-quiz') }}" class="nav-sub-item">Science Quiz</a>
+        <a href="{{ route('games.show', 'coding-quiz') }}" class="nav-sub-item">Coding Quiz</a>
+    </div>
+
+</div>
+
+<!-- Strategy Lab -->
+<div x-data="{ openStrategy: false }" class="mb-2">
+
+    <button
+        @click="openStrategy = !openStrategy"
+        class="nav-item w-full flex items-center justify-between"
+    >
+        <div class="flex items-center">
+            <i class="fa-solid fa-chess-knight nav-icon"></i>
+            <span>Strategy Lab</span>
+        </div>
+
+        <i class="fa-solid text-xs"
+           :class="openStrategy ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
+
+    <div x-show="openStrategy" x-transition class="space-y-1 overflow-hidden">
+        <a href="{{ route('games.show', 'kingdom-defense') }}" class="nav-sub-item">Kingdom Defense</a>
+        <a href="{{ route('games.show', 'chess-war') }}" class="nav-sub-item">Chess War</a>
+        <a href="{{ route('games.show', 'empire-builder') }}" class="nav-sub-item">Empire Builder</a>
+    </div>
+
+</div>
+
+<!-- Memory Challenge -->
+<div x-data="{ openMemory: false }" class="mb-2">
+
+    <button
+        @click="openMemory = !openMemory"
+        class="nav-item w-full flex items-center justify-between"
+    >
+        <div class="flex items-center">
+            <i class="fa-solid fa-eye nav-icon"></i>
+            <span>Memory Game</span>
+        </div>
+
+        <i class="fa-solid text-xs"
+           :class="openMemory ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
+
+    <div x-show="openMemory" x-transition class="space-y-1 overflow-hidden">
+        <a href="{{ route('games.show', 'memory-flip') }}" class="nav-sub-item">Memory Flip</a>
+        <a href="{{ route('games.show', 'sequence-recall') }}" class="nav-sub-item">Sequence Recall</a>
+        <a href="{{ route('games.show', 'hidden-object') }}" class="nav-sub-item">Hidden Object</a>
+    </div>
+
+</div>
+
+<!-- Toys Games -->
+<div x-data="{ openToys: false }" class="mb-4">
+
+    <button
+        @click="openToys = !openToys"
+        class="nav-item w-full flex items-center justify-between"
+    >
+        <div class="flex items-center">
+            <i class="fa-solid fa-gamepad nav-icon"></i>
+            <span>Toys Games</span>
+        </div>
+
+        <i class="fa-solid text-xs"
+           :class="openToys ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
+
+    <div x-show="openToys" x-transition class="space-y-1 overflow-hidden">
+        <a href="{{ route('games.show', 'toys-game-1') }}" class="nav-sub-item">Toys Game 1</a>
+        <a href="{{ route('games.show', 'toys-game-2') }}" class="nav-sub-item">Toys Game 2</a>
+        <a href="{{ route('games.show', 'toys-game-3') }}" class="nav-sub-item">Toys Game 3</a>
+    </div>
+
+</div>
                 <div class="px-4 py-2 mt-4 mb-2 text-xs uppercase tracking-wider text-[var(--text-secondary)] font-bold">Competition</div>
                 
                 <a href="{{ route('leaderboards.index') }}" class="nav-item {{ request()->routeIs('leaderboards.index') ? 'active' : '' }}">
@@ -245,14 +448,30 @@
                 </a>
             </div>
             
-            <div class="p-4 border-t border-[var(--panel-border)]">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="w-full got-btn-outline !py-2 text-sm">
-                        <i class="fa-solid fa-right-from-bracket mr-2"></i> Log Out
-                    </button>
-                </form>
-            </div>
+      <div class="p-4 border-t border-[var(--panel-border)] flex justify-center">
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+
+        <button type="submit" style="background:none;border:none;padding:0;cursor:pointer;">
+           <img 
+    src="{{ asset('images/logout-dragon-btn.png') }}" 
+    alt="Logout"
+    style="
+        width: 150px;
+        height: auto;
+        display: block;
+        transition: all 0.3s ease;
+    "
+    onmouseover="
+        this.style.filter='drop-shadow(0 0 8px #ff4500) drop-shadow(0 0 18px #ff2200)';
+    "
+    onmouseout="
+        this.style.filter='none';
+    "
+>
+        </button>
+    </form>
+</div>
         </aside>
 
         <!-- Main Content Wrapper -->
@@ -268,19 +487,40 @@
                     </button>
                     
                     <!-- Stats Badges -->
-                    <div class="hidden sm:flex space-x-4">
+                    <div class="hidden sm:flex space-x-3 items-center">
                         <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
                             <i class="fa-solid fa-star text-yellow-400"></i>
                             <span class="font-bold font-cinzel">{{ auth()->user()->xp ?? 0 }} XP</span>
                         </div>
                         <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
                             <i class="fa-solid fa-coins text-yellow-500"></i>
-                            <span class="font-bold font-cinzel">{{ auth()->user()->coins ?? 0 }}</span>
+                            <span class="font-bold font-cinzel" id="topbar-coins">{{ auth()->user()->coins ?? 0 }}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
+                            <i class="fa-solid fa-gem text-blue-400"></i>
+                            <span class="font-bold font-cinzel" id="topbar-diamonds">{{ auth()->user()->diamonds ?? 0 }}</span>
                         </div>
                         <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
                             <i class="fa-solid fa-shield-halved text-[var(--accent-color)]"></i>
                             <span class="font-bold font-cinzel">Lvl {{ auth()->user()->level ?? 1 }}</span>
                         </div>
+
+                        <!-- Premium Daily Rewards Button -->
+                        @php
+                            $resetTime = now()->copy()->startOfDay()->addHours(5)->addMinutes(30);
+                            if (now()->lt($resetTime)) {
+                                $resetTime = $resetTime->subDay();
+                            }
+                            $canClaim = !auth()->user()->last_reward_claimed_at || auth()->user()->last_reward_claimed_at->lt($resetTime);
+                            $unopenedBoxCount = \App\Models\UserBox::where('user_id', auth()->id())->where('is_opened', false)->count();
+                        @endphp
+                        <button type="button" class="daily-reward-btn {{ !$canClaim ? 'claimed' : '' }}" id="daily-reward-trigger" onclick="claimDailyReward()">
+                            @if($canClaim)
+                                <span class="notif-badge" id="dr-badge">1</span>
+                            @endif
+                            <i class="fa-solid fa-gift gift-icon"></i>
+                            <span class="btn-text">DAILY REWARDS</span>
+                        </button>
                     </div>
                 </div>
 
@@ -454,5 +694,247 @@
             draw();
         }
     </script>
+
+    <!-- ====== Daily Reward Claimed Modal ====== -->
+    <div id="daily-reward-modal" class="fixed inset-0 z-[9999] flex items-center justify-center hidden" style="perspective: 1000px;">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeDailyModal()"></div>
+        <div class="relative w-full max-w-md mx-4 reward-popup-enter" id="daily-reward-box">
+            <!-- Particle rain container -->
+            <div id="coin-rain" class="absolute inset-0 overflow-hidden pointer-events-none z-10"></div>
+
+            <div class="relative bg-gradient-to-b from-[#1a0a2e] via-[#0d0d2b] to-[#0a0a1a] rounded-2xl border-2 border-yellow-600/60 shadow-[0_0_60px_rgba(255,165,0,0.3),0_0_120px_rgba(255,69,0,0.15)] overflow-hidden">
+                <!-- Top glow bar -->
+                <div class="h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
+                
+                <!-- Floating gift icon -->
+                <div class="flex justify-center -mt-1 pt-6">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-700 to-red-900 border-4 border-yellow-500 flex items-center justify-center shadow-[0_0_30px_rgba(255,69,0,0.6),0_0_60px_rgba(255,215,0,0.3)]" style="animation: gift-pulse 2s ease-in-out infinite;">
+                        <i class="fa-solid fa-gift text-4xl text-yellow-300 drop-shadow-[0_2px_8px_rgba(255,215,0,0.8)]"></i>
+                    </div>
+                </div>
+
+                <div class="text-center pt-5 pb-2 px-6">
+                    <h2 class="text-3xl font-cinzel font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-400 bg-clip-text text-transparent drop-shadow-lg">Daily Reward Claimed!</h2>
+                    <p class="text-sm text-gray-400 mt-2 font-rajdhani">Your royal provisions for today have been granted.</p>
+                </div>
+
+                <!-- Reward Items -->
+                <div class="grid grid-cols-3 gap-4 px-6 py-5">
+                    <div class="bg-black/60 border border-yellow-700/40 rounded-xl p-4 text-center shadow-[inset_0_0_15px_rgba(255,165,0,0.08)]">
+                        <i class="fa-solid fa-coins text-3xl text-yellow-500 mb-2 drop-shadow-[0_0_10px_rgba(255,200,0,0.5)]"></i>
+                        <div class="text-xl font-black text-yellow-300 font-cinzel" id="modal-coins">+200</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mt-1">Gold Coins</div>
+                    </div>
+                    <div class="bg-black/60 border border-blue-600/40 rounded-xl p-4 text-center shadow-[inset_0_0_15px_rgba(59,130,246,0.08)]">
+                        <i class="fa-solid fa-gem text-3xl text-blue-400 mb-2 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]"></i>
+                        <div class="text-xl font-black text-blue-300 font-cinzel" id="modal-diamonds">+1</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mt-1">Diamond</div>
+                    </div>
+                    <div class="bg-black/60 border border-purple-600/40 rounded-xl p-4 text-center shadow-[inset_0_0_15px_rgba(168,85,247,0.08)]">
+                        <i class="fa-solid fa-box-open text-3xl text-purple-400 mb-2 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
+                        <div class="text-xl font-black text-purple-300 font-cinzel" id="modal-boxes">+1</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mt-1">Mystery Box</div>
+                    </div>
+                </div>
+
+                <div class="px-6 pb-6">
+                    <button onclick="closeDailyModal()" class="w-full py-3 rounded-xl font-cinzel font-black text-lg tracking-wider bg-gradient-to-r from-yellow-700 via-yellow-600 to-orange-600 hover:from-yellow-600 hover:via-yellow-500 hover:to-orange-500 text-black shadow-[0_0_20px_rgba(255,165,0,0.4)] hover:shadow-[0_0_30px_rgba(255,165,0,0.6)] transition-all transform hover:scale-[1.02]">
+                        <i class="fa-solid fa-check mr-2"></i> Collect Rewards
+                    </button>
+                </div>
+                <div class="h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== Mystery Box Modal ====== -->
+    <div id="mystery-box-modal" class="fixed inset-0 z-[9999] flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeMysteryModal()"></div>
+        <div class="relative w-full max-w-sm mx-4 reward-popup-enter">
+            <div class="bg-gradient-to-b from-[#1a0a2e] via-[#150d30] to-[#0a0a1a] rounded-2xl border-2 border-purple-600/60 shadow-[0_0_60px_rgba(168,85,247,0.3)] overflow-hidden text-center">
+                <div class="h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+                <h2 class="text-2xl font-cinzel font-black text-purple-300 pt-6 mb-1">Mystery Box</h2>
+                <p class="text-xs text-gray-500 font-bold mb-5">Unveil the ancient secrets within.</p>
+
+                <div class="relative h-36 flex items-center justify-center mb-5">
+                    <i id="mbox-idle" class="fa-solid fa-box text-8xl text-purple-500 drop-shadow-[0_0_25px_rgba(168,85,247,0.8)] cursor-pointer hover:scale-110 transition-transform" style="animation: gift-pulse 2s ease-in-out infinite;"></i>
+                    <div id="mbox-spinning" class="hidden absolute inset-0 flex items-center justify-center">
+                        <i class="fa-solid fa-box-open text-8xl text-purple-400" style="animation: spin 0.4s linear infinite;"></i>
+                    </div>
+                    <div id="mbox-result" class="hidden absolute inset-0 flex flex-col items-center justify-center" style="animation: reward-slide-in 0.5s ease forwards;">
+                        <i id="mbox-result-icon" class="fa-solid fa-coins text-6xl text-yellow-400 mb-2 drop-shadow-[0_0_20px_rgba(255,200,0,0.8)]"></i>
+                        <span id="mbox-result-text" class="text-2xl font-black text-yellow-300 font-cinzel">+0</span>
+                    </div>
+                </div>
+
+                <div class="px-6 pb-6 space-y-3">
+                    <button id="mbox-open-btn" onclick="openMysteryBox()" class="w-full py-3 rounded-xl font-cinzel font-black text-base tracking-wider bg-gradient-to-r from-purple-800 to-purple-600 hover:from-purple-700 hover:to-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.5)] transition-all">
+                        <i class="fa-solid fa-lock-open mr-2"></i> Open Mystery Box
+                    </button>
+                    <button id="mbox-close-btn" onclick="closeMysteryModal()" class="hidden w-full py-2.5 rounded-xl font-cinzel font-bold text-sm bg-gray-800 hover:bg-gray-700 text-gray-300 transition-all">
+                        Close
+                    </button>
+                </div>
+                <div class="h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== Reward System JS ====== -->
+    <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        function claimDailyReward() {
+            const btn = document.getElementById('daily-reward-trigger');
+            if (btn.classList.contains('claimed')) {
+                // Already claimed — open mystery box modal if user has boxes
+                showMysteryModal();
+                return;
+            }
+
+            fetch('{{ route("rewards.daily") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('modal-coins').innerText = '+' + data.coins;
+                    document.getElementById('modal-diamonds').innerText = '+' + data.diamonds;
+                    document.getElementById('modal-boxes').innerText = '+' + data.box;
+
+                    // Update topbar
+                    document.getElementById('topbar-coins').innerText = data.new_coins_balance.toLocaleString();
+                    document.getElementById('topbar-diamonds').innerText = data.new_diamonds_balance.toLocaleString();
+
+                    // Mark button as claimed
+                    btn.classList.add('claimed');
+                    const badge = document.getElementById('dr-badge');
+                    if (badge) badge.style.display = 'none';
+
+                    // Show modal
+                    showDailyModal();
+                    spawnCoinRain();
+                }
+            })
+            .catch(err => console.error('Daily reward error:', err));
+        }
+
+        function showDailyModal() {
+            const modal = document.getElementById('daily-reward-modal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeDailyModal() {
+            document.getElementById('daily-reward-modal').classList.add('hidden');
+        }
+
+        function showMysteryModal() {
+            const modal = document.getElementById('mystery-box-modal');
+            modal.classList.remove('hidden');
+            // Reset states
+            document.getElementById('mbox-idle').classList.remove('hidden');
+            document.getElementById('mbox-spinning').classList.add('hidden');
+            document.getElementById('mbox-result').classList.add('hidden');
+            document.getElementById('mbox-open-btn').classList.remove('hidden');
+            document.getElementById('mbox-close-btn').classList.add('hidden');
+        }
+
+        function closeMysteryModal() {
+            document.getElementById('mystery-box-modal').classList.add('hidden');
+        }
+
+        function openMysteryBox() {
+            document.getElementById('mbox-idle').classList.add('hidden');
+            document.getElementById('mbox-spinning').classList.remove('hidden');
+            document.getElementById('mbox-open-btn').classList.add('hidden');
+
+            fetch('{{ route("rewards.mystery-box.open") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                setTimeout(() => {
+                    document.getElementById('mbox-spinning').classList.add('hidden');
+                    if (data.success) {
+                        const icon = document.getElementById('mbox-result-icon');
+                        const text = document.getElementById('mbox-result-text');
+                        if (data.coins > 0 && data.coins >= data.diamonds) {
+                            icon.className = 'fa-solid fa-coins text-6xl text-yellow-400 mb-2 drop-shadow-[0_0_20px_rgba(255,200,0,0.8)]';
+                            text.innerText = '+' + data.coins + ' Coins!';
+                            text.className = 'text-2xl font-black text-yellow-300 font-cinzel';
+                        } else {
+                            icon.className = 'fa-solid fa-gem text-6xl text-blue-400 mb-2 drop-shadow-[0_0_20px_rgba(59,130,246,0.8)]';
+                            text.innerText = '+' + data.diamonds + ' Diamonds!';
+                            text.className = 'text-2xl font-black text-blue-300 font-cinzel';
+                        }
+                        document.getElementById('mbox-result').classList.remove('hidden');
+                        document.getElementById('mbox-close-btn').classList.remove('hidden');
+
+                        document.getElementById('topbar-coins').innerText = data.new_coins_balance.toLocaleString();
+                        document.getElementById('topbar-diamonds').innerText = data.new_diamonds_balance.toLocaleString();
+                    } else {
+                        alert(data.message || 'No mystery boxes available.');
+                        closeMysteryModal();
+                    }
+                }, 1200);
+            })
+            .catch(err => {
+                console.error('Mystery box error:', err);
+                closeMysteryModal();
+            });
+        }
+
+        function spawnCoinRain() {
+            const container = document.getElementById('coin-rain');
+            if (!container) return;
+            const emojis = ['🪙', '💎', '✨', '🪙', '🪙'];
+            for (let i = 0; i < 25; i++) {
+                const el = document.createElement('span');
+                el.className = 'coin-particle';
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = Math.random() * 30 + '%';
+                el.style.animationDelay = Math.random() * 0.8 + 's';
+                container.appendChild(el);
+            }
+            setTimeout(() => { container.innerHTML = ''; }, 2500);
+        }
+
+        // Auto-trigger on dashboard load if can claim
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('daily-reward-trigger');
+            if (btn && !btn.classList.contains('claimed')) {
+                setTimeout(() => claimDailyReward(), 2000);
+            }
+        });
+    </script>
+    
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const sidebar = document.querySelector('.flex-1.overflow-y-auto');
+
+    const savedScroll = localStorage.getItem("sidebarScroll");
+
+    if (savedScroll !== null) {
+        sidebar.scrollTop = savedScroll;
+    }
+
+    sidebar.addEventListener("scroll", function () {
+        localStorage.setItem("sidebarScroll", sidebar.scrollTop);
+    });
+
+});
+</script>
 </html>
