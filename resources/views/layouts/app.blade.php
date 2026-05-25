@@ -68,13 +68,84 @@
             pointer-events: none;
         }
 
-        /* Sidebar Styling */
-        .got-sidebar {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid var(--panel-border);
-            transition: all 0.3s ease;
+.got-sidebar {
+
+    background: var(--panel-bg);
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    border-right: 1px solid var(--panel-border);
+
+    transition: all 0.35s ease;
+
+    width: 16rem;
+
+}
+
+/* HIDDEN SIDEBAR */
+
+.got-sidebar.sidebar-collapsed{
+
+    transform: translateX(-100%);
+
+}
+        .got-sidebar.sidebar-collapsed {
+            transform: translateX(-100%);
+            width: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-right: none;
+            pointer-events: none;
+        }
+
+        /* Hamburger Toggle Button */
+        .sidebar-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+        .sidebar-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--text-accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+            border-color: var(--accent-color);
+        }
+
+        /* Close button pinned to top-right corner of sidebar */
+        .sidebar-close-corner {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 25;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.8rem;
+        }
+        .sidebar-close-corner:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+            border-color: var(--accent-color);
         }
         
         .nav-item {
@@ -246,6 +317,108 @@
             padding-left: 1.2rem;
             text-shadow: 0 0 5px var(--accent-glow);
         }
+        .nav-text-wrap{
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
+}
+
+.coming-soon-badge{
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1.8px;
+    color:#f7c58a;
+    text-transform:uppercase;
+    margin-top:3px;
+    font-family:'Cinzel', serif;
+
+    animation:comingGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes comingGlow{
+
+    0%{
+        opacity:0.45;
+        text-shadow:
+        0 0 2px rgba(255,180,90,0.3),
+        0 0 4px rgba(255,140,0,0.2);
+    }
+
+    50%{
+        opacity:1;
+        text-shadow:
+        0 0 4px rgba(255,220,150,0.9),
+        0 0 8px rgba(255,170,70,0.9),
+        0 0 14px rgba(255,120,0,0.8);
+    }
+
+    100%{
+        opacity:0.45;
+        text-shadow:
+        0 0 2px rgba(255,180,90,0.3),
+        0 0 4px rgba(255,140,0,0.2);
+    }
+}
+
+.music-switch{
+    position:relative;
+    width:65px;
+    height:32px;
+    display:inline-block;
+}
+
+.music-switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.music-slider{
+    position:absolute;
+    cursor:pointer;
+    inset:0;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,140,0,0.4);
+    transition:.4s;
+    border-radius:50px;
+}
+
+.music-slider:before{
+    position:absolute;
+    content:"";
+    height:24px;
+    width:24px;
+    left:4px;
+    bottom:3px;
+    background:white;
+    transition:.4s;
+    border-radius:50%;
+}
+
+.music-switch input:checked + .music-slider{
+    background:linear-gradient(90deg,#ff5e00,#ff9900);
+    box-shadow:0 0 15px rgba(255,120,0,0.6);
+}
+
+.music-switch input:checked + .music-slider:before{
+    transform:translateX(32px);
+}
+
+.music-range{
+    height:7px;
+    appearance:none;
+    border-radius:20px;
+    background:rgba(255,255,255,0.15);
+}
+
+.music-range::-webkit-slider-thumb{
+    appearance:none;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#ff8800;
+    cursor:pointer;
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
@@ -258,8 +431,24 @@
 
     <div class="flex h-screen overflow-hidden">
         
+
         <!-- Sidebar -->
-        <aside class="got-sidebar w-64 flex-shrink-0 flex flex-col hidden md:flex h-full relative z-20">
+         <!-- MOBILE OVERLAY -->
+
+<div
+    x-show="sidebarOpen"
+    @click="sidebarOpen = false"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] md:hidden"
+></div>
+<aside
+id="sidebar"
+class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
+:class="{ 'sidebar-collapsed': !sidebarOpen }"
+>
+            <!-- Close button pinned to top-right corner -->
+            <button @click="sidebarOpen = false" class="sidebar-close-corner" title="Hide Sidebar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             <div class="p-6 flex items-center justify-center border-b border-[var(--panel-border)]">
 <img src="{{ asset('favicon.ico') }}"
      alt="Logo"
@@ -273,6 +462,16 @@
                 </a>
                 
                 <div class="px-4 py-2 mt-4 mb-2 text-xs uppercase tracking-wider text-[var(--text-secondary)] font-bold">Games Arena</div>
+
+
+                <!-- ALL GAMES -->
+<a href="{{ route('all.games') }}"
+   class="nav-item {{ request()->routeIs('all.games') ? 'active' : '' }}">
+    
+    <i class="fa-solid fa-gamepad nav-icon"></i>
+    <span>All Games</span>
+
+</a>
                 
       <!-- Brain Games -->
 <div x-data="{ openBrain: false }" class="mb-2">
@@ -428,21 +627,35 @@
                 <a href="{{ route('achievements.index') }}" class="nav-item {{ request()->routeIs('achievements.index') ? 'active' : '' }}">
                     <i class="fa-solid fa-medal nav-icon"></i> Achievements
                 </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-gift nav-icon"></i> Rewards Center
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-users-rays nav-icon"></i> Multiplayer Zone
-                </a>
-                
+        <a href="#" class="nav-item">
+    <i class="fa-solid fa-gift nav-icon"></i>
+
+    <div class="nav-text-wrap">
+        <span>Rewards Center</span>
+        <span class="coming-soon-badge">Locked</span>
+    </div>
+</a>
+          <a href="#" class="nav-item">
+    <i class="fa-solid fa-users-rays nav-icon"></i>
+
+    <div class="nav-text-wrap">
+        <span>Multiplayer Zone</span>
+        <span class="coming-soon-badge">Locked</span>
+    </div>
+</a>
                 <div class="px-4 py-2 mt-4 mb-2 text-xs uppercase tracking-wider text-[var(--text-secondary)] font-bold">Account</div>
                 
                 <a href="{{ route('profile.edit') }}" class="nav-item {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
                     <i class="fa-solid fa-user-shield nav-icon"></i> User Profile
                 </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-envelope nav-icon"></i> Messages
-                </a>
+           <a href="#" class="nav-item">
+    <i class="fa-solid fa-users-rays nav-icon"></i>
+
+    <div class="nav-text-wrap">
+        <span>MESSAGES</span>
+        <span class="coming-soon-badge">Locked</span>
+    </div>
+</a>
                 <a href="{{ route('settings.index') }}" class="nav-item {{ request()->routeIs('settings.index') ? 'active' : '' }}">
                     <i class="fa-solid fa-gear nav-icon"></i> Settings
                 </a>
@@ -481,9 +694,14 @@
             <header class="h-20 got-panel border-b-0 border-l-0 border-r-0 flex items-center justify-between px-6 shrink-0">
                 
                 <div class="flex items-center space-x-6">
-                    <!-- Mobile Menu Button -->
-                    <button class="md:hidden text-[var(--text-secondary)] hover:text-white">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                    <!-- Sidebar Toggle (hamburger) -->
+                    <button 
+                        x-show="!sidebarOpen" 
+                        @click="sidebarOpen = true" 
+                        class="sidebar-toggle-btn" 
+                        title="Open Sidebar"
+                    >
+                        <i class="fa-solid fa-bars text-lg"></i>
                     </button>
                     
                     <!-- Stats Badges -->
@@ -507,8 +725,9 @@
 
                         <!-- Premium Daily Rewards Button -->
                         @php
-                            $resetTime = now()->copy()->startOfDay()->addHours(5)->addMinutes(30);
-                            if (now()->lt($resetTime)) {
+                            $now = now('Asia/Kolkata');
+                            $resetTime = $now->copy()->startOfDay()->addHours(5)->addMinutes(30);
+                            if ($now->lt($resetTime)) {
                                 $resetTime = $resetTime->subDay();
                             }
                             $canClaim = !auth()->user()->last_reward_claimed_at || auth()->user()->last_reward_claimed_at->lt($resetTime);
@@ -568,6 +787,7 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('appData', () => ({
                 theme: '{{ auth()->user()->theme_preference ?? "fire" }}',
+                sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
                 
                 toggleTheme() {
                     this.theme = this.theme === 'fire' ? 'ice' : 'fire';
@@ -583,6 +803,12 @@
                     });
                     
                     initParticles(this.theme);
+                },
+
+                init() {
+                    this.$watch('sidebarOpen', (val) => {
+                        localStorage.setItem('sidebarOpen', val);
+                    });
                 }
             }));
         });
@@ -910,14 +1136,38 @@
             setTimeout(() => { container.innerHTML = ''; }, 2500);
         }
 
-        // Auto-trigger on dashboard load if can claim
-        document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('daily-reward-trigger');
-            if (btn && !btn.classList.contains('claimed')) {
-                setTimeout(() => claimDailyReward(), 2000);
-            }
-        });
+        // Auto-claim script removed so user can manually claim the daily reward
     </script>
+    <audio id="bgMusic" loop>
+    <source src="{{ asset('music/theme.mpeg') }}" type="audio/mpeg">
+</audio>
+
+<script>
+document.addEventListener("click", function () {
+
+    const music = document.getElementById("bgMusic");
+
+    music.volume = 0.3;
+
+    music.play();
+
+}, { once: true });
+
+function toggleMusic(){
+
+    const music = document.getElementById("bgMusic");
+
+    if(music.paused){
+
+        music.play();
+
+    }else{
+
+        music.pause();
+
+    }
+}
+</script>
     
 </body>
 <script>

@@ -67,6 +67,7 @@
                     class="got-btn-outline rounded-full !p-2.5 !flex items-center justify-center w-10 h-10">
                 <i class="fa-solid" :class="theme === 'fire' ? 'fa-snowflake' : 'fa-fire'"></i>
             </button>
+ 
 
             @if (Route::has('login'))
                 @auth
@@ -220,5 +221,189 @@
             draw();
         }
     </script>
+
+    <div class="mini-music-toggle">
+
+    <label class="mini-switch">
+
+        <input 
+            type="checkbox"
+            id="musicToggle"
+            checked
+            onchange="toggleMusic()"
+        >
+
+        <span class="mini-slider">
+            <i class="fa-solid fa-music music-icon"></i>
+        </span>
+
+    </label>
+
+</div>
+
+<style>
+
+.mini-music-toggle{
+    display:flex;
+    align-items:center;
+}
+
+.mini-switch{
+    position:relative;
+    width:52px;
+    height:28px;
+}
+
+.mini-switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.mini-slider{
+    position:absolute;
+    inset:0;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    transition:0.4s;
+
+    background:rgba(20,20,30,0.75);
+
+    border:1px solid rgba(255,140,0,0.35);
+
+    backdrop-filter:blur(8px);
+
+    box-shadow:
+    0 0 10px rgba(255,120,0,0.15),
+    inset 0 0 8px rgba(255,255,255,0.03);
+}
+
+.music-icon{
+    position:absolute;
+
+    top:6px;
+    left:7px;
+
+    font-size:13px;
+
+    color:#ffb347;
+
+    transition:0.4s;
+
+    text-shadow:
+    0 0 8px rgba(255,140,0,0.8);
+}
+
+.mini-switch input:checked + .mini-slider{
+
+    background:
+    linear-gradient(90deg,#ff5e00,#ff9900);
+
+    box-shadow:
+    0 0 15px rgba(255,120,0,0.45);
+}
+
+.mini-switch input:checked + .mini-slider .music-icon{
+
+    transform:translateX(22px);
+
+    color:white;
+}
+
+</style>
+
+<audio id="globalMusic" loop preload="auto">
+    <source src="{{ asset('music/theme.mpeg') }}" type="audio/mpeg">
+</audio>
+
+<audio id="clickSound" preload="auto">
+    <source src="{{ asset('music/click.aac') }}" type="audio/aac">
+</audio>
+
+<script>
+
+const music = document.getElementById("globalMusic");
+const clickSound = document.getElementById("clickSound");
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const enabled = localStorage.getItem("musicEnabled") || "on";
+
+    const toggle = document.getElementById("musicToggle");
+
+    if(toggle){
+
+        toggle.checked = enabled === "on";
+    }
+
+    music.volume = 0.3;
+
+    function startMusic(){
+
+        if(enabled === "on"){
+
+            music.play().catch(() => {});
+        }
+    }
+
+    startMusic();
+
+    document.addEventListener("click", startMusic, { once:true });
+
+});
+
+
+function toggleMusic(){
+
+    const enabled = localStorage.getItem("musicEnabled") || "on";
+
+    const toggle = document.getElementById("musicToggle");
+
+    if(enabled === "on"){
+
+        music.pause();
+
+        localStorage.setItem("musicEnabled", "off");
+
+        if(toggle) toggle.checked = false;
+
+    }else{
+
+        music.play();
+
+        localStorage.setItem("musicEnabled", "on");
+
+        if(toggle) toggle.checked = true;
+    }
+}
+
+
+function playClickSound(){
+
+    clickSound.pause();
+
+    clickSound.currentTime = 0;
+
+    clickSound.volume = 0.5;
+
+    clickSound.play().catch(() => {});
+}
+
+
+document.addEventListener("click", function(e){
+
+    const target = e.target.closest("button, a, input");
+
+    if(target){
+
+        playClickSound();
+    }
+
+});
+
+</script>
 </body>
 </html>

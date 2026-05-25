@@ -33,14 +33,13 @@
         <div class="got-panel p-6 rounded-xl" data-aos="fade-up" data-aos-delay="100">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <div class="text-xs text-[var(--text-secondary)] uppercase tracking-wider font-bold">Quests Completed</div>
-                    <div class="text-3xl font-cinzel font-bold text-white mt-1">24</div>
+                    <div class="text-xs text-[var(--text-secondary)] uppercase tracking-wider font-bold">Games Played</div>
+                    <div class="text-3xl font-cinzel font-bold text-white mt-1">{{ number_format($totalGamesPlayed) }}</div>
                 </div>
                 <div class="w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center border border-green-500">
-                    <i class="fa-solid fa-scroll text-green-400"></i>
+                    <i class="fa-solid fa-gamepad text-green-400"></i>
                 </div>
             </div>
-            <div class="text-xs text-green-400 font-bold"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +4 from last week</div>
         </div>
 
         <!-- Quick Stat 3 -->
@@ -72,6 +71,29 @@
             <div id="category-chart" class="w-full h-80 flex justify-center"></div>
         </div>
 
+    </div>
+
+    <!-- Games Played by Category -->
+    <div class="mt-8 mb-8">
+        <h3 class="font-cinzel font-bold text-2xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300" data-aos="fade-up">
+            <i class="fa-solid fa-layer-group mr-2 text-orange-400"></i> Games Played by Section
+        </h3>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            @forelse($gamesPlayedByCategory as $stat)
+            <div class="got-panel p-5 rounded-lg flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition duration-300 border border-[var(--panel-border)] hover:border-orange-500 shadow-lg" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 50 }}">
+                <div class="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-bold mb-2 group-hover:text-orange-300 transition">{{ ucfirst($stat->category) }}</div>
+                <div class="text-4xl font-cinzel font-black text-white group-hover:text-yellow-400 drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)]">
+                    {{ number_format($stat->games_count) }}
+                </div>
+                <div class="text-[10px] text-gray-500 mt-1 uppercase">Matches</div>
+            </div>
+            @empty
+            <div class="col-span-full text-center text-gray-500 py-8 italic bg-black/40 rounded-xl border border-gray-800">
+                You haven't played any games yet. Head to the Games Arena!
+            </div>
+            @endforelse
+        </div>
     </div>
 
     <!-- Script to render ApexCharts -->

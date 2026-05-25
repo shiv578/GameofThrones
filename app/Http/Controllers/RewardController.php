@@ -18,9 +18,10 @@ class RewardController extends Controller
     {
         $user = $request->user();
 
-        // Determine the current reward period reset time (5:30 AM daily)
-        $resetTime = now()->copy()->startOfDay()->addHours(5)->addMinutes(30);
-        if (now()->lt($resetTime)) {
+        // Determine the current reward period reset time (5:30 AM IST)
+        $now = now('Asia/Kolkata');
+        $resetTime = $now->copy()->startOfDay()->addHours(5)->addMinutes(30);
+        if ($now->lt($resetTime)) {
             // Before 5:30 AM today, so the active period started yesterday at 5:30 AM
             $resetTime = $resetTime->subDay();
         }

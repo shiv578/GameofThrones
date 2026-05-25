@@ -58,8 +58,8 @@
         <h2 class="text-2xl font-cinzel font-bold mb-4 sm:mb-0">Global Rankings</h2>
         
         <form method="GET" action="{{ route('leaderboards.index') }}" class="flex space-x-2">
-            <select name="house" class="got-input rounded-lg !py-2" onchange="this.form.submit()">
-                <option value="all" {{ $filter == 'all' ? 'selected' : '' }}>All Houses</option>
+<select name="house" class="got-input fantasy-select rounded-lg !py-2" onchange="this.form.submit()">
+                    <option value="all" {{ $filter == 'all' ? 'selected' : '' }}>All Houses</option>
                 <option value="Stark" {{ $filter == 'Stark' ? 'selected' : '' }}>House Stark</option>
                 <option value="Targaryen" {{ $filter == 'Targaryen' ? 'selected' : '' }}>House Targaryen</option>
                 <option value="Lannister" {{ $filter == 'Lannister' ? 'selected' : '' }}>House Lannister</option>
@@ -126,4 +126,91 @@
             {{ $topUsers->links() }}
         </div>
     </div>
+    <style>
+
+/* ===== FANTASY SELECT DROPDOWN ===== */
+
+.fantasy-select{
+
+    background: rgba(15,0,0,0.88) !important;
+
+    border: 2px solid rgba(255,140,0,0.7) !important;
+
+color: #ffffff !important;
+    font-family: 'Cinzel', serif !important;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    padding: 14px 22px !important;
+
+    border-radius: 18px !important;
+
+    outline: none;
+
+    min-width: 260px;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 0 15px rgba(255,120,0,0.35),
+        inset 0 0 10px rgba(255,140,0,0.15);
+
+    transition: 0.3s ease;
+
+    cursor: pointer;
+
+}
+
+/* HOVER */
+
+.fantasy-select:hover{
+
+    border-color: #ffae42 !important;
+
+    box-shadow:
+        0 0 25px rgba(255,140,0,0.7),
+        0 0 40px rgba(0,180,255,0.25);
+
+}
+
+/* OPTIONS */
+.fantasy-select option{
+
+    background: #140404 !important;
+
+    color: #ffddaa !important;
+
+    font-family: 'Cinzel', serif !important;
+
+    font-size: 20px !important;
+
+    font-weight: bold;
+
+    padding: 15px;
+
+}
+
+/* Selected Option */
+
+.fantasy-select option:checked{
+
+    background: #ff6b00 !important;
+
+    color: white !important;
+
+}
+
+/* Dropdown Open */
+
+.fantasy-select:focus{
+
+    background: rgba(15,0,0,0.95) !important;
+
+    color: white !important;
+
+}
+
+</style>
 </x-app-layout>

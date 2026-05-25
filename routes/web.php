@@ -25,6 +25,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     // Games
+    Route::get('/all-games', function () {
+        $games = \App\Models\Game::all()->map(function ($game) {
+            $played = \App\Models\Score::where('user_id', auth()->id())
+                ->where('game_id', $game->id)
+                ->count();
+            $game->level = min(100, floor($played / 15) + 1);
+            $game->progress_to_next = ($played % 15) / 15 * 100;
+            return $game;
+        });
+        return view('all-games', compact('games'));
+    })->name('all.games');
     Route::get('/games', [\App\Http\Controllers\GameController::class, 'index'])->name('games.index');
     Route::get('/games/{slug}', [\App\Http\Controllers\GameController::class, 'show'])->name('games.show');
     Route::post('/games/{slug}/score', [\App\Http\Controllers\GameController::class, 'saveScore'])->name('games.score');

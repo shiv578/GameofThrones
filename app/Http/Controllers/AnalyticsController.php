@@ -40,6 +40,17 @@ class AnalyticsController extends Controller
             $lineData[] = $scores->sum('xp_earned');
         }
 
-        return view('analytics.index', compact('pieLabels', 'pieData', 'lineLabels', 'lineData'));
+        // 3. Total Games Played
+        $totalGamesPlayed = \App\Models\Score::where('user_id', $user->id)
+            ->count();
+
+        // 4. Games Played by Category
+        $gamesPlayedByCategory = \App\Models\Score::where('user_id', $user->id)
+            ->join('games', 'scores.game_id', '=', 'games.id')
+            ->selectRaw('games.category, count(scores.id) as games_count')
+            ->groupBy('games.category')
+            ->get();
+
+        return view('analytics.index', compact('pieLabels', 'pieData', 'lineLabels', 'lineData', 'totalGamesPlayed', 'gamesPlayedByCategory'));
     }
 }

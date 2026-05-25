@@ -41,7 +41,59 @@
                         <option value="fr" {{ $settings->language == 'fr' ? 'selected' : '' }}>Braavosi (French)</option>
                     </select>
                 </div>
-                
+                <!-- MUSIC CONTROL -->
+<div class="mb-6">
+
+    <label class="block font-cinzel text-sm uppercase tracking-wider text-[var(--text-secondary)] mb-4">
+        Music Control
+    </label>
+
+    <!-- ENABLE / DISABLE -->
+    <div class="flex items-center justify-between mb-5">
+
+        <span class="text-sm font-cinzel tracking-wider text-[var(--text-secondary)] uppercase">
+            Enable Music
+        </span>
+
+        <label class="music-switch">
+            <input type="checkbox" id="musicToggle" checked onchange="toggleMusicSetting()">
+            <span class="music-slider"></span>
+        </label>
+
+    </div>
+
+    <!-- MUSIC VOLUME -->
+    <div class="mb-2 flex justify-between">
+
+        <span class="text-sm font-cinzel tracking-wider text-[var(--text-secondary)] uppercase">
+            Music Volume
+        </span>
+
+        <span id="musicVolumeText" class="text-[var(--text-accent)] font-bold">
+            30%
+        </span>
+
+    </div>
+
+    <div class="flex items-center space-x-4">
+
+        <i class="fa-solid fa-volume-low text-[var(--text-secondary)]"></i>
+
+        <input
+            type="range"
+            id="musicVolume"
+            min="0"
+            max="100"
+            value="30"
+            class="w-full music-range"
+            oninput="changeMusicVolume(this.value)"
+        >
+
+        <i class="fa-solid fa-volume-high text-[var(--text-accent)]"></i>
+
+    </div>
+
+</div>
                 <!-- Notifications -->
                 <div class="mb-8">
                     <label class="flex items-center cursor-pointer">
