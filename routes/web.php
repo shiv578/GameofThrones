@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
       Route::get('/games', [\App\Http\Controllers\GameController::class, 'index'])->name('games.index');
     Route::get('/games/{slug}', [\App\Http\Controllers\GameController::class, 'show'])->name('games.show');
     Route::post('/games/{slug}/score', [\App\Http\Controllers\GameController::class, 'saveScore'])->name('games.score');
-    
+     
     // Achievements
     Route::get('/achievements', [\App\Http\Controllers\AchievementController::class, 'index'])->name('achievements.index');
     

@@ -8,7 +8,7 @@ class="got-panel mx-auto bg-transparent p-6 sm:p-12 w-full max-w-xl rounded-2xl 
         background-repeat: no-repeat;
     "
 >      
-            <div class="text-center mb-8 relative z-10">
+             <div class="text-center mb-8 relative z-10">
                 <h1 class="text-4xl font-cinzel font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--text-primary)] to-[var(--text-accent)] mb-2">
                     Forge Your Legacy
                 </h1>
