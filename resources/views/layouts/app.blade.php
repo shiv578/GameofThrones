@@ -269,13 +269,13 @@
             background: linear-gradient(135deg, rgba(255,215,0,0.15), transparent 40%, rgba(255,69,0,0.1), transparent);
             z-index: -1;
             opacity: 0;
-            transition: opacity 0.3s ease;
+             transition: opacity 0.3s ease;
         }
         .daily-reward-btn:hover {
             transform: translateY(-2px) scale(1.03);
             box-shadow:
                  0 0 25px rgba(255, 165, 0, 0.5),
-                0 0 50px rgba(255, 69, 0, 0.25),
+                 0 0 50px rgba(255, 69, 0, 0.25),
                 0 4px 15px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 215, 0, 0.25);
         }
