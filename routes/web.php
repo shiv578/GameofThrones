@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
         });
         return view('all-games', compact('games'));
     })->name('all.games');
-    Route::get('/games', [\App\Http\Controllers\GameController::class, 'index'])->name('games.index');
+      Route::get('/games', [\App\Http\Controllers\GameController::class, 'index'])->name('games.index');
     Route::get('/games/{slug}', [\App\Http\Controllers\GameController::class, 'show'])->name('games.show');
     Route::post('/games/{slug}/score', [\App\Http\Controllers\GameController::class, 'saveScore'])->name('games.score');
     
