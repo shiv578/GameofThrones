@@ -6,13 +6,13 @@
         ⚔ ALL GAMES ⚔
     </h1>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-5">
 
         @foreach($games as $game)
         <div class="game-card relative overflow-hidden group">
             
             <!-- Game Image Header -->
-            <div class="h-36 overflow-hidden relative border-b border-orange-500/30">
+            <div class="h-20 sm:h-36 overflow-hidden relative border-b border-orange-500/30">
                 @php
                     $imageName = str_replace('-', '_', $game->slug) . '.png';
                     $imagePath = public_path('images/games/' . $imageName);
@@ -24,19 +24,19 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0a0000] via-black/30 to-transparent"></div>
                 
                 <!-- Level Badge -->
-                <div class="absolute top-3 right-3 bg-black/80 border border-yellow-500/60 rounded px-2.5 py-1 flex items-center shadow-[0_0_10px_rgba(255,200,0,0.5)] z-10 backdrop-blur-sm">
-                    <i class="fa-solid fa-star text-yellow-400 text-[10px] mr-1.5"></i>
-                    <span class="text-yellow-400 font-cinzel font-black text-xs tracking-wider">LVL {{ $game->level }}</span>
+                <div class="absolute top-1 right-1 sm:top-3 sm:right-3 bg-black/80 border border-yellow-500/60 rounded px-1.5 py-0.5 sm:px-2.5 sm:py-1 flex items-center shadow-[0_0_10px_rgba(255,200,0,0.5)] z-10 backdrop-blur-sm">
+                    <i class="fa-solid fa-star text-yellow-400 text-[8px] sm:text-[10px] mr-1 sm:mr-1.5"></i>
+                    <span class="text-yellow-400 font-cinzel font-black text-[9px] sm:text-xs tracking-wider">LVL {{ $game->level }}</span>
                 </div>
             </div>
 
             <!-- Game Info -->
-            <div class="p-4 flex-1 flex flex-col justify-between z-10 bg-gradient-to-b from-[#0a0000] to-[#120000]">
+            <div class="p-2 sm:p-4 flex-1 flex flex-col justify-between z-10 bg-gradient-to-b from-[#0a0000] to-[#120000]">
                 <div>
-                    <h2 class="text-xl font-bold text-white font-cinzel mb-1.5 group-hover:text-yellow-400 transition">{{ $game->name }}</h2>
-                    <p class="text-gray-400 text-xs line-clamp-2 mb-3 leading-relaxed">{{ $game->description }}</p>
+                    <h2 class="text-[11px] sm:text-xl font-bold text-white font-cinzel mb-1 sm:mb-1.5 group-hover:text-yellow-400 transition text-center sm:text-left leading-tight truncate sm:whitespace-normal">{{ $game->name }}</h2>
+                    <p class="hidden sm:block text-gray-400 text-xs line-clamp-2 mb-3 leading-relaxed">{{ $game->description }}</p>
                     
-                    <div class="mini-tags mb-4">
+                    <div class="mini-tags hidden sm:flex mb-4">
                         <span>{{ ucfirst($game->category) }}</span>
                         <span>{{ ucfirst($game->difficulty) }}</span>
                     </div>
@@ -44,18 +44,19 @@
 
                 <!-- Progress & Action -->
                 <div>
-                    <div class="mb-3.5 bg-black/50 p-2.5 rounded-lg border border-red-900/30">
-                        <div class="flex justify-between text-[10px] text-gray-400 mb-1.5 font-bold uppercase tracking-wider">
-                            <span>EXP to Lvl {{ min(100, $game->level + 1) }}</span>
+                    <div class="mb-2 sm:mb-3.5 bg-black/50 p-1 sm:p-2.5 rounded-md sm:rounded-lg border border-red-900/30">
+                        <div class="flex justify-between text-[8px] sm:text-[10px] text-gray-400 mb-1 sm:mb-1.5 font-bold uppercase tracking-wider">
+                            <span class="hidden sm:inline">EXP to Lvl {{ min(100, $game->level + 1) }}</span>
+                            <span class="sm:hidden">EXP</span>
                             <span class="text-orange-400">{{ $game->level == 100 ? 'MAX' : round($game->progress_to_next) . '%' }}</span>
                         </div>
-                        <div class="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
+                        <div class="h-1 sm:h-1.5 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                             <div class="h-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 rounded-full shadow-[0_0_5px_rgba(255,150,0,0.5)]" style="width: {{ $game->level == 100 ? 100 : $game->progress_to_next }}%"></div>
                         </div>
                     </div>
                     
-                    <a href="{{ route('games.show', $game->slug) }}" class="block w-full text-center play-btn py-2.5 rounded-lg text-sm font-black font-cinzel tracking-widest uppercase">
-                        ▶ PLAY NOW
+                    <a href="{{ route('games.show', $game->slug) }}" class="block w-full text-center play-btn py-1 sm:py-2.5 rounded sm:rounded-lg text-[9px] sm:text-sm font-black font-cinzel tracking-widest uppercase">
+                        ▶ <span class="hidden sm:inline">PLAY NOW</span><span class="sm:hidden">PLAY</span>
                     </a>
                 </div>
             </div>

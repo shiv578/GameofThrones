@@ -67,6 +67,14 @@ class DashboardController extends Controller
             $masteryData[] = $highScore > 0 ? intval($highScore) : $fallbacks[$cat];
         }
         $masteryLabels = array_map('ucfirst', $gameCategories);
+
+        // Generate smart notifications for this user
+        try {
+            app(\App\Services\NotificationService::class)->generateSmartNotifications($user->id);
+        } catch (\Exception $e) {
+            // Silently fail — notifications are non-critical
+            \Illuminate\Support\Facades\Log::warning('Notification generation failed: ' . $e->getMessage());
+        }
         
         return view('dashboard', compact(
             'user', 

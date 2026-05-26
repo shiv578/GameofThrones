@@ -52,6 +52,12 @@ Route::middleware('auth')->group(function () {
     // Rewards
     Route::post('/rewards/daily', [\App\Http\Controllers\RewardController::class, 'claimDaily'])->name('rewards.daily');
     Route::post('/rewards/mystery-box/open', [\App\Http\Controllers\RewardController::class, 'openMysteryBox'])->name('rewards.mystery-box.open');
+
+    // Notifications
+    Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'read'])->name('notifications.read');
+    Route::post('/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'readAll'])->name('notifications.readAll');
+    Route::post('/notifications/clear-all', [\App\Http\Controllers\NotificationController::class, 'clearAll'])->name('notifications.clearAll');
 });
 
 require __DIR__.'/auth.php';

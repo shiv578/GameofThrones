@@ -66,4 +66,18 @@ class NotificationController extends Controller
             'message' => "Marked {$count} notifications as read.",
         ]);
     }
+
+    /**
+     * Clear (delete) all notifications.
+     */
+    public function clearAll(Request $request): JsonResponse
+    {
+        $userId = $request->user()->id;
+        $count = $this->notificationService->clearAll($userId);
+
+        return response()->json([
+            'success' => true,
+            'message' => "Cleared {$count} notifications.",
+        ]);
+    }
 }

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div x-data="{ step: 1, house: '', charClass: '' }" class="flex items-center justify-center h-full w-full">
 <div id="themePanel"
-class="got-panel mx-auto bg-transparent p-8 sm:p-12 w-full max-w-xl rounded-2xl relative overflow-hidden"    style="
+class="got-panel mx-auto bg-transparent p-6 sm:p-12 w-full max-w-xl rounded-2xl relative overflow-hidden"    style="
         background-image: url('{{ asset('images/fire-panel-bg.png') }}');
         background-size: 100% 100%;
         background-position: center;
@@ -33,32 +33,97 @@ class="got-panel mx-auto bg-transparent p-8 sm:p-12 w-full max-w-xl rounded-2xl 
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label for="name" class="block font-cinzel text-sm uppercase tracking-wider text-[var(--text-secondary)] mb-1">Full Name</label>
-                            <input id="name" class="got-input rounded-lg" type="text" name="name" value="{{ old('name') }}" required autofocus placeholder="Jon Snow">
+                            <input id="name" class="got-input rounded-lg" type="text" name="name" value="{{ old('name') }}" autofocus placeholder="Jon Snow" @input="document.getElementById('name_error').classList.add('hidden')">
+                            <span id="name_error" class="text-red-500 text-sm mt-1 block hidden"></span>
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
                         <div>
                             <label for="email" class="block font-cinzel text-sm uppercase tracking-wider text-[var(--text-secondary)] mb-1">Email Address</label>
-                            <input id="email" class="got-input rounded-lg" type="email" name="email" value="{{ old('email') }}" required placeholder="lord@winterfell.com">
+                            <input id="email" class="got-input rounded-lg" type="email" name="email" value="{{ old('email') }}" placeholder="lord@winterfell.com" @input="document.getElementById('email_error').classList.add('hidden')">
+                            <span id="email_error" class="text-red-500 text-sm mt-1 block hidden"></span>
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
 
                         <div>
                             <label for="password" class="block font-cinzel text-sm uppercase tracking-wider text-[var(--text-secondary)] mb-1">Password</label>
-                            <input id="password" class="got-input rounded-lg" type="password" name="password" required autocomplete="new-password">
+                            <input id="password" class="got-input rounded-lg" type="password" name="password" autocomplete="new-password" @input="document.getElementById('password_error').classList.add('hidden')">
+                            <span id="password_error" class="text-red-500 text-sm mt-1 block hidden"></span>
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
 
                         <div>
                             <label for="password_confirmation" class="block font-cinzel text-sm uppercase tracking-wider text-[var(--text-secondary)] mb-1">Confirm Password</label>
-                            <input id="password_confirmation" class="got-input rounded-lg" type="password" name="password_confirmation" required autocomplete="new-password">
+                            <input id="password_confirmation" class="got-input rounded-lg" type="password" name="password_confirmation" autocomplete="new-password" @input="document.getElementById('password_confirmation_error').classList.add('hidden')">
+                            <span id="password_confirmation_error" class="text-red-500 text-sm mt-1 block hidden"></span>
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         </div>
                     </div>
 
-                    <div class="pt-6 flex justify-between items-center">
-                        <a href="{{ route('login') }}" class="text-sm text-[var(--text-accent)] hover:underline">Already registered?</a>
-                        <button type="button" @click="step = 2" class="got-btn rounded-lg">Next <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                    <div class="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <a href="{{ route('login') }}" class="text-sm text-[var(--text-accent)] hover:underline order-2 sm:order-1">Already registered?</a>
+                        <button type="button" @click="
+                            let btn = $event.currentTarget;
+                            let originalHtml = btn.innerHTML;
+                            btn.innerHTML = 'Validating... <i class=\'fa-solid fa-spinner fa-spin ml-2\'></i>';
+                            btn.disabled = true;
+                            
+                            // Clear previous errors
+                            ['name', 'email', 'password', 'password_confirmation'].forEach(id => {
+                                let el = document.getElementById(id + '_error');
+                                if (el) { el.classList.add('hidden'); el.textContent = ''; }
+                            });
+                            
+                            fetch('/register/validate-step-1', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']').getAttribute('content'),
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    name: document.getElementById('name').value,
+                                    email: document.getElementById('email').value,
+                                    password: document.getElementById('password').value,
+                                    password_confirmation: document.getElementById('password_confirmation').value
+                                })
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    step = 2;
+                                } else if (response.status === 422) {
+                                    return response.json().then(data => {
+                                        if (data.errors) {
+                                            if (data.errors.name) {
+                                                let ne = document.getElementById('name_error');
+                                                ne.textContent = data.errors.name[0];
+                                                ne.classList.remove('hidden');
+                                            }
+                                            if (data.errors.email) {
+                                                let ee = document.getElementById('email_error');
+                                                ee.textContent = data.errors.email[0];
+                                                ee.classList.remove('hidden');
+                                            }
+                                            if (data.errors.password) {
+                                                let pe = document.getElementById('password_error');
+                                                pe.textContent = data.errors.password[0];
+                                                pe.classList.remove('hidden');
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    alert('Something went wrong. Please try again.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('An error occurred during validation.');
+                            })
+                            .finally(() => {
+                                btn.innerHTML = originalHtml;
+                                btn.disabled = false;
+                            });
+                        " class="got-btn rounded-lg disabled:opacity-50 transition-opacity">Next <i class="fa-solid fa-arrow-right ml-2"></i></button>
                     </div>
                 </div>
 

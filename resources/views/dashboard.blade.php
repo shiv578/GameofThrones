@@ -34,11 +34,11 @@
             </p>
             
             <!-- Interactive Call to Action inside Banner -->
-            <div class="mt-6 flex space-x-4">
-                <a href="#quick-play" class="got-btn !py-2 !px-6 rounded-lg text-xs flex items-center shadow-[0_0_20px_var(--accent-glow)]">
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <a href="#quick-play" class="got-btn !py-2 !px-6 rounded-lg text-xs flex items-center justify-center shadow-[0_0_20px_var(--accent-glow)]">
                     <i class="fa-solid fa-swords mr-2"></i> Play Battle
                 </a>
-                <a href="{{ route('analytics.index') }}" class="got-btn-outline !py-2 !px-6 rounded-lg text-xs flex items-center">
+                <a href="{{ route('analytics.index') }}" class="got-btn-outline !py-2 !px-6 rounded-lg text-xs flex items-center justify-center">
                       Insights <i class="fa-solid fa-arrow-right ml-2 text-[10px]"></i>
                  </a>
              </div>
@@ -97,7 +97,7 @@
             
             <div class="flex items-center justify-between mb-4">
                 <div>
-                    <p class="text-[10px] sm:text-xs text-[var(--text-secondary)] uppercase tracking-widest font-bold">{{ $stat['label'] }}</p>
+                    <p class="text-[9px] sm:text-xs text-[var(--text-secondary)] uppercase tracking-widest font-bold">{{ $stat['label'] }}</p>
                     <h3 class="text-xl sm:text-3xl font-cinzel font-black text-white mt-1">{{ $stat['value'] }}</h3>
                 </div>
                 <div class="w-11 h-11 rounded-xl bg-black/50 border border-[var(--panel-border)] flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">

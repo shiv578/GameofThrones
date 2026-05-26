@@ -56,7 +56,7 @@
         </span>
 
         <label class="music-switch">
-            <input type="checkbox" id="musicToggle" checked onchange="toggleMusicSetting()">
+            <input type="checkbox" id="musicToggle" onchange="toggleMusicSetting()">
             <span class="music-slider"></span>
         </label>
 
@@ -143,4 +143,45 @@
         </div>
         
     </div>
+
+    {{-- ═══ Music Settings JS ═══ --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Wait a tick for MusicSystem to be available
+            setTimeout(initMusicSettings, 100);
+        });
+
+        function initMusicSettings() {
+            if (typeof MusicSystem === 'undefined') {
+                // Retry if music-system.js hasn't loaded yet
+                setTimeout(initMusicSettings, 200);
+                return;
+            }
+
+            const state   = MusicSystem.getState();
+            const toggle  = document.getElementById('musicToggle');
+            const slider  = document.getElementById('musicVolume');
+            const volText = document.getElementById('musicVolumeText');
+
+            // Set initial values from localStorage
+            if (toggle)  toggle.checked = state.enabled;
+            if (slider)  slider.value   = Math.round(state.volume * 100);
+            if (volText) volText.textContent = Math.round(state.volume * 100) + '%';
+        }
+
+        function toggleMusicSetting() {
+            const toggle = document.getElementById('musicToggle');
+            if (typeof MusicSystem !== 'undefined') {
+                MusicSystem.toggle(toggle.checked);
+            }
+        }
+
+        function changeMusicVolume(val) {
+            const volText = document.getElementById('musicVolumeText');
+            if (volText) volText.textContent = val + '%';
+            if (typeof MusicSystem !== 'undefined') {
+                MusicSystem.setVolume(val / 100);
+            }
+        }
+    </script>
 </x-app-layout>

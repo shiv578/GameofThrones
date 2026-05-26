@@ -2,7 +2,7 @@
     <div class="flex items-center justify-center h-full">
 <div 
 id="themePanel"
-class="got-panel p-8 sm:p-12 w-full max-w-lg rounded-2xl relative overflow-hidden bg-cover bg-center">            <!-- Decorative Runes Top -->
+class="got-panel p-6 sm:p-12 w-full max-w-lg rounded-2xl relative overflow-hidden mx-auto" style="background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">            <!-- Decorative Runes Top -->
 
 
             <div class="text-center mb-8 relative z-10 mt-4">
@@ -50,6 +50,7 @@ class="got-panel p-8 sm:p-12 w-full max-w-lg rounded-2xl relative overflow-hidde
         id="themeLoginBtn"
         src="{{ asset('images/fire-login.png') }}"               
         alt="Login Button"
+        class="max-w-full h-auto"
     >
 
 </button>

@@ -57,7 +57,7 @@
     <canvas id="particles-canvas"></canvas>
 
     <!-- Header Navigation -->
-    <header class="w-full max-w-7xl mx-auto flex justify-between items-center z-10 py-4">
+    <header class="w-full max-w-7xl mx-auto flex flex-wrap justify-between items-center z-10 py-4 gap-4">
         <div class="flex items-center space-x-3">
         </div>
         
@@ -88,7 +88,7 @@
             A TOYS AND GAMES PLATFORM
         </h2>
         
-        <h1 class="text-5xl sm:text-7xl md:text-8xl font-cinzel font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+        <h1 class="text-4xl sm:text-7xl md:text-8xl font-cinzel font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
             CONQUEST<br class="sm:hidden"> OF WINTER
         </h1>
         

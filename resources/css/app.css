@@ -47,6 +47,19 @@
         drop-shadow(0 0 12px #ff4500) drop-shadow(0 0 25px #ff6600) drop-shadow(0 0 45px #ff2200) brightness(1.2);
 }
 
+/* ICE THEME GLOW */
+.theme-ice .image-login-btn img {
+
+    filter:
+        drop-shadow(0 0 20px rgba(0, 170, 255, 0.8)) drop-shadow(0 0 40px rgba(0, 200, 255, 0.5));
+}
+
+.theme-ice .image-login-btn:hover img {
+
+    filter:
+        drop-shadow(0 0 12px #00aaff) drop-shadow(0 0 25px #00e5ff) drop-shadow(0 0 45px #00ffff) brightness(1.2);
+}
+
 /* =========================
    FIRE TEXT EFFECT
 ========================= */
@@ -613,6 +626,17 @@
     .got-input:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* WebKit Autofill Override */
+    .got-input:-webkit-autofill,
+    .got-input:-webkit-autofill:hover, 
+    .got-input:-webkit-autofill:focus, 
+    .got-input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px rgba(15, 5, 5, 0.95) inset !important;
+        -webkit-text-fill-color: var(--text-primary) !important;
+        transition: background-color 5000s ease-in-out 0s;
+        caret-color: var(--text-primary);
     }
 
     /* Buttons */

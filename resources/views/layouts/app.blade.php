@@ -69,36 +69,28 @@
         }
 
 .got-sidebar {
-
     background: var(--panel-bg);
-
     backdrop-filter: blur(20px);
-
     -webkit-backdrop-filter: blur(20px);
-
     border-right: 1px solid var(--panel-border);
-
-    transition: all 0.35s ease;
-
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), margin-left 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s;
     width: 16rem;
-
+    flex-shrink: 0;
 }
 
 /* HIDDEN SIDEBAR */
-
-.got-sidebar.sidebar-collapsed{
-
+.got-sidebar.sidebar-collapsed {
     transform: translateX(-100%);
-
+    opacity: 0;
+    pointer-events: none;
 }
-        .got-sidebar.sidebar-collapsed {
-            transform: translateX(-100%);
-            width: 0;
-            opacity: 0;
-            overflow: hidden;
-            border-right: none;
-            pointer-events: none;
-        }
+
+@media (min-width: 768px) {
+    .got-sidebar.sidebar-collapsed {
+        margin-left: -16rem;
+        transform: translateX(0);
+    }
+}
 
         /* Hamburger Toggle Button */
         .sidebar-toggle-btn {
@@ -122,7 +114,6 @@
             border-color: var(--accent-color);
         }
 
-        /* Close button pinned to top-right corner of sidebar */
         .sidebar-close-corner {
             position: absolute;
             top: 10px;
@@ -131,15 +122,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
+            width: 36px;
+            height: 36px;
             border-radius: 6px;
             border: 1px solid var(--panel-border);
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.25s ease;
-            font-size: 0.8rem;
+            font-size: 1rem;
         }
         .sidebar-close-corner:hover {
             background: rgba(255, 255, 255, 0.15);
@@ -147,6 +138,53 @@
             box-shadow: 0 0 10px var(--accent-glow);
             border-color: var(--accent-color);
         }
+
+        /* Stylish Back Button */
+        .got-back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+        .got-back-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-color), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        .got-back-btn i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .got-back-btn:hover {
+            color: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 12px var(--accent-glow);
+            transform: translateX(-2px);
+        }
+        .got-back-btn:hover::before {
+            opacity: 0.2;
+        }
+        .got-back-btn:hover i {
+            transform: translateX(-3px);
+        }
+        
         
         .nav-item {
             display: flex;
@@ -419,6 +457,108 @@
     background:#ff8800;
     cursor:pointer;
 }
+
+/* Bell Wiggle Animation */
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    15% { transform: rotate(14deg); }
+    30% { transform: rotate(-12deg); }
+    45% { transform: rotate(10deg); }
+    60% { transform: rotate(-8deg); }
+    75% { transform: rotate(4deg); }
+}
+
+/* Notification Scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+/* Line Clamp */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Notification item entrance */
+.notif-item {
+    animation: notifSlideIn 0.3s ease forwards;
+}
+@keyframes notifSlideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Unread Bell Glow Animations */
+@keyframes unreadGlowFire {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 69, 0, 0.5), inset 0 0 5px rgba(255, 69, 0, 0.3); border-color: rgba(255,69,0,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255, 69, 0, 1), inset 0 0 15px rgba(255, 69, 0, 0.8); border-color: rgba(255,69,0,1); }
+}
+@keyframes unreadGlowIce {
+    0%, 100% { box-shadow: 0 0 10px rgba(0, 191, 255, 0.5), inset 0 0 5px rgba(0, 191, 255, 0.3); border-color: rgba(0,191,255,0.5); }
+    50% { box-shadow: 0 0 25px rgba(0, 191, 255, 1), inset 0 0 15px rgba(0, 191, 255, 0.8); border-color: rgba(0,191,255,1); }
+}
+
+.theme-fire .has-unread {
+    animation: unreadGlowFire 1.5s infinite;
+    color: #ff4500 !important;
+}
+
+.theme-ice .has-unread {
+    animation: unreadGlowIce 1.5s infinite;
+    color: #00bfff !important;
+}
+
+/* Epic Logout Styling */
+.theme-fire .epic-logout-btn {
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.1), rgba(200, 0, 0, 0.3));
+    border: 1px solid rgba(255, 69, 0, 0.6);
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.3), inset 0 0 10px rgba(255, 69, 0, 0.2);
+    color: #ffaa88;
+}
+.theme-fire .epic-logout-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 69, 0, 0.4), rgba(200, 0, 0, 0.7));
+    border: 1px solid #ff4500;
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.8), inset 0 0 20px rgba(255, 69, 0, 0.5);
+    color: #ffffff;
+    text-shadow: 0 0 10px #ff4500;
+}
+.theme-ice .epic-logout-btn {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(0, 100, 255, 0.3));
+    border: 1px solid rgba(0, 191, 255, 0.6);
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3), inset 0 0 10px rgba(0, 191, 255, 0.2);
+    color: #88ddff;
+}
+.theme-ice .epic-logout-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.4), rgba(0, 100, 255, 0.7));
+    border: 1px solid #00bfff;
+    box-shadow: 0 0 30px rgba(0, 191, 255, 0.8), inset 0 0 20px rgba(0, 191, 255, 0.5);
+    color: #ffffff;
+    text-shadow: 0 0 10px #00bfff;
+}
+
+.theme-fire .epic-logout-modal {
+    background: radial-gradient(circle at center, #4a0505 0%, #1a0000 100%);
+    border: 2px solid #ff4500;
+    box-shadow: 0 0 60px rgba(255, 69, 0, 0.6), inset 0 0 40px rgba(255, 69, 0, 0.3);
+}
+.theme-fire .epic-logout-icon-wrap {
+    background: rgba(255, 69, 0, 0.2);
+    border-color: #ff4500;
+    box-shadow: inset 0 0 20px rgba(255, 69, 0, 0.8);
+}
+.theme-ice .epic-logout-modal {
+    background: radial-gradient(circle at center, #001f3f 0%, #000a1a 100%);
+    border: 2px solid #00bfff;
+    box-shadow: 0 0 60px rgba(0, 191, 255, 0.6), inset 0 0 40px rgba(0, 191, 255, 0.3);
+}
+.theme-ice .epic-logout-icon-wrap {
+    background: rgba(0, 191, 255, 0.2);
+    border-color: #00bfff;
+    box-shadow: inset 0 0 20px rgba(0, 191, 255, 0.8);
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
@@ -437,6 +577,12 @@
 
 <div
     x-show="sidebarOpen"
+    x-transition:enter="transition ease-out duration-400"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-400"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
     @click="sidebarOpen = false"
     class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] md:hidden"
 ></div>
@@ -661,37 +807,24 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
                 </a>
             </div>
             
-      <div class="p-4 border-t border-[var(--panel-border)] flex justify-center">
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-
-        <button type="submit" style="background:none;border:none;padding:0;cursor:pointer;">
-           <img 
-    src="{{ asset('images/logout-dragon-btn.png') }}" 
-    alt="Logout"
-    style="
-        width: 150px;
-        height: auto;
-        display: block;
-        transition: all 0.3s ease;
-    "
-    onmouseover="
-        this.style.filter='drop-shadow(0 0 8px #ff4500) drop-shadow(0 0 18px #ff2200)';
-    "
-    onmouseout="
-        this.style.filter='none';
-    "
->
-        </button>
-    </form>
-</div>
+            <div class="p-6 mt-auto border-t border-[var(--panel-border)]">
+                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                    @csrf
+                    <button type="button" onclick="confirmLogout()" class="epic-logout-btn w-full relative group overflow-hidden rounded-xl p-3 transition-all duration-300">
+                        <div class="relative flex items-center justify-center space-x-3">
+                            <i class="fa-solid fa-power-off group-hover:animate-pulse transition-colors text-lg"></i>
+                            <span class="font-cinzel font-black tracking-widest transition-all">LEAVE REALM</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
         </aside>
 
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col h-full relative z-10 overflow-hidden">
             
             <!-- Topbar -->
-            <header class="h-20 got-panel border-b-0 border-l-0 border-r-0 flex items-center justify-between px-6 shrink-0">
+            <header class="h-20 got-panel border-b-0 border-l-0 border-r-0 flex items-center justify-between px-6 shrink-0 relative z-50">
                 
                 <div class="flex items-center space-x-6">
                     <!-- Sidebar Toggle (hamburger) -->
@@ -703,22 +836,29 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
                     >
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
+
+                    <!-- Stylish Back Button -->
+                    @if(!request()->routeIs('dashboard'))
+                    <button onclick="window.history.back()" class="got-back-btn" title="Go Back">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    @endif
                     
                     <!-- Stats Badges -->
-                    <div class="hidden sm:flex space-x-3 items-center">
-                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
+                    <div class="flex space-x-3 items-center overflow-x-auto whitespace-nowrap hide-scrollbar max-w-[50vw] sm:max-w-none pr-4 sm:pr-0">
+                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)] shrink-0">
                             <i class="fa-solid fa-star text-yellow-400"></i>
                             <span class="font-bold font-cinzel">{{ auth()->user()->xp ?? 0 }} XP</span>
                         </div>
-                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
+                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)] shrink-0">
                             <i class="fa-solid fa-coins text-yellow-500"></i>
                             <span class="font-bold font-cinzel" id="topbar-coins">{{ auth()->user()->coins ?? 0 }}</span>
                         </div>
-                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
+                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)] shrink-0">
                             <i class="fa-solid fa-gem text-blue-400"></i>
                             <span class="font-bold font-cinzel" id="topbar-diamonds">{{ auth()->user()->diamonds ?? 0 }}</span>
                         </div>
-                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)]">
+                        <div class="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-[var(--panel-border)] shrink-0">
                             <i class="fa-solid fa-shield-halved text-[var(--accent-color)]"></i>
                             <span class="font-bold font-cinzel">Lvl {{ auth()->user()->level ?? 1 }}</span>
                         </div>
@@ -733,7 +873,7 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
                             $canClaim = !auth()->user()->last_reward_claimed_at || auth()->user()->last_reward_claimed_at->lt($resetTime);
                             $unopenedBoxCount = \App\Models\UserBox::where('user_id', auth()->id())->where('is_opened', false)->count();
                         @endphp
-                        <button type="button" class="daily-reward-btn {{ !$canClaim ? 'claimed' : '' }}" id="daily-reward-trigger" onclick="claimDailyReward()">
+                        <button type="button" class="daily-reward-btn shrink-0 {{ !$canClaim ? 'claimed' : '' }}" id="daily-reward-trigger" onclick="claimDailyReward()">
                             @if($canClaim)
                                 <span class="notif-badge" id="dr-badge">1</span>
                             @endif
@@ -749,11 +889,66 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
                         <i class="fa-solid" :class="theme === 'fire' ? 'fa-snowflake' : 'fa-fire'"></i>
                     </button>
                     
-                    <!-- Notifications -->
-                    <button class="relative text-[var(--text-secondary)] hover:text-white transition">
-                        <i class="fa-regular fa-bell text-xl"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">3</span>
-                    </button>
+                    <!-- Notifications Bell Dropdown -->
+                    <div class="relative" x-data="{ notifOpen: false }" @click.outside="notifOpen = false">
+                        <button id="notif-bell-btn" @click="notifOpen = !notifOpen; if(notifOpen) NotificationSystem.poll();" class="got-btn-outline !p-2 !flex items-center justify-center w-10 h-10 rounded-full group transition-all duration-500">
+                            <i class="fa-solid fa-bell text-lg group-hover:animate-[wiggle_0.5s_ease-in-out]" :class="notifOpen ? 'text-[var(--text-accent)]' : ''"></i>
+                            <span id="notif-badge" class="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[9px] font-black min-w-[18px] h-[18px] rounded-full flex items-center justify-center border-2 border-[var(--bg-primary)] shadow-[0_0_10px_rgba(220,38,38,0.6)] animate-pulse">0</span>
+                        </button>
+
+                        <!-- Dropdown Panel -->
+                        <div x-show="notifOpen"
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                             x-transition:enter-end="opacity-1 translate-y-0 scale-100"
+                             x-transition:leave="transition ease-in duration-200"
+                             x-transition:leave-start="opacity-1 translate-y-0 scale-100"
+                             x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                             class="absolute right-0 top-full mt-3 w-[360px] sm:w-[400px] max-h-[520px] rounded-2xl overflow-hidden z-[9999]
+                                    bg-gradient-to-b from-[var(--panel-bg)] to-[rgba(0,0,0,0.95)]
+                                    border border-[var(--panel-border)]
+                                    shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_var(--accent-glow)]
+                                    backdrop-blur-xl"
+                             style="transform-origin: top right;">
+
+                            <!-- Header -->
+                            <div class="px-5 py-4 border-b border-[var(--panel-border)] flex items-center justify-between bg-black/40">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-scroll text-[var(--text-accent)] text-sm"></i>
+                                    <h3 class="font-cinzel font-black text-sm text-white tracking-wider">Royal Scrolls</h3>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button id="notif-mark-all" onclick="NotificationSystem.markAllRead()" class="hidden text-[9px] font-bold uppercase tracking-wider text-[var(--text-accent)] hover:text-white bg-black/50 border border-[var(--panel-border)] hover:border-[var(--accent-color)] px-2 py-1 rounded-full transition-all duration-200 hover:shadow-[0_0_10px_var(--accent-glow)]" title="Mark All Read">
+                                        <i class="fa-solid fa-check-double"></i>
+                                    </button>
+                                    <button id="notif-clear-all" onclick="NotificationSystem.clearAll()" class="text-[9px] font-bold uppercase tracking-wider text-red-500 hover:text-white bg-black/50 border border-[var(--panel-border)] hover:border-red-500 px-2 py-1 rounded-full transition-all duration-200 hover:shadow-[0_0_10px_rgba(239,68,68,0.6)]" title="Clear All Notifications">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Notification List -->
+                            <div id="notif-list" class="overflow-y-auto max-h-[380px] divide-y divide-[var(--panel-border)]/20 p-2 space-y-1 custom-scrollbar">
+                                <!-- Notifications rendered by JS -->
+                            </div>
+
+                            <!-- Empty State -->
+                            <div id="notif-empty" class="hidden px-6 py-10 text-center">
+                                <div class="w-16 h-16 rounded-full bg-black/50 border border-[var(--panel-border)] mx-auto flex items-center justify-center mb-4">
+                                    <i class="fa-solid fa-bell-slash text-2xl text-[var(--text-secondary)]"></i>
+                                </div>
+                                <p class="text-sm font-cinzel font-bold text-[var(--text-secondary)]">No Scrolls Yet</p>
+                                <p class="text-[10px] text-[var(--text-secondary)] mt-1">Play games and conquer the realm to receive royal notifications.</p>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="px-5 py-3 border-t border-[var(--panel-border)] bg-black/40 text-center">
+                                <span class="text-[9px] text-[var(--text-secondary)] uppercase tracking-widest font-bold">
+                                    <i class="fa-solid fa-shield-halved mr-1 text-[var(--text-accent)]"></i> Conquest of Winter — Notifications
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- User Dropdown -->
                     <div class="flex items-center space-x-3 pl-4 border-l border-[var(--panel-border)] cursor-pointer">
@@ -787,7 +982,8 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
         document.addEventListener('alpine:init', () => {
             Alpine.data('appData', () => ({
                 theme: '{{ auth()->user()->theme_preference ?? "fire" }}',
-                sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
+                // Always start closed on mobile, otherwise respect localStorage
+                sidebarOpen: window.innerWidth < 768 ? false : (localStorage.getItem('sidebarOpen') !== 'false'),
                 
                 toggleTheme() {
                     this.theme = this.theme === 'fire' ? 'ice' : 'fire';
@@ -807,8 +1003,22 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
 
                 init() {
                     this.$watch('sidebarOpen', (val) => {
-                        localStorage.setItem('sidebarOpen', val);
+                        // Only persist sidebar state on desktop
+                        if (window.innerWidth >= 768) {
+                            localStorage.setItem('sidebarOpen', val);
+                        }
                     });
+
+                    // Close sidebar instantly on mobile when a link is clicked
+                    setTimeout(() => {
+                        document.querySelectorAll('.nav-item:not(button), .nav-sub-item').forEach(el => {
+                            el.addEventListener('click', () => {
+                                if (window.innerWidth < 768) {
+                                    this.sidebarOpen = false;
+                                }
+                            });
+                        });
+                    }, 100);
                 }
             }));
         });
@@ -940,12 +1150,12 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
                 </div>
 
                 <div class="text-center pt-5 pb-2 px-6">
-                    <h2 class="text-3xl font-cinzel font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-400 bg-clip-text text-transparent drop-shadow-lg">Daily Reward Claimed!</h2>
-                    <p class="text-sm text-gray-400 mt-2 font-rajdhani">Your royal provisions for today have been granted.</p>
+                    <h2 class="text-3xl font-cinzel font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-400 bg-clip-text text-transparent drop-shadow-lg">Daily Login Reward</h2>
+                    <p class="text-sm text-gray-400 mt-2 font-rajdhani">Your royal provisions for today are ready.</p>
                 </div>
 
                 <!-- Reward Items -->
-                <div class="grid grid-cols-3 gap-4 px-6 py-5">
+                <div class="grid grid-cols-2 gap-4 px-6 py-5">
                     <div class="bg-black/60 border border-yellow-700/40 rounded-xl p-4 text-center shadow-[inset_0_0_15px_rgba(255,165,0,0.08)]">
                         <i class="fa-solid fa-coins text-3xl text-yellow-500 mb-2 drop-shadow-[0_0_10px_rgba(255,200,0,0.5)]"></i>
                         <div class="text-xl font-black text-yellow-300 font-cinzel" id="modal-coins">+200</div>
@@ -956,16 +1166,14 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
                         <div class="text-xl font-black text-blue-300 font-cinzel" id="modal-diamonds">+1</div>
                         <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mt-1">Diamond</div>
                     </div>
-                    <div class="bg-black/60 border border-purple-600/40 rounded-xl p-4 text-center shadow-[inset_0_0_15px_rgba(168,85,247,0.08)]">
-                        <i class="fa-solid fa-box-open text-3xl text-purple-400 mb-2 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
-                        <div class="text-xl font-black text-purple-300 font-cinzel" id="modal-boxes">+1</div>
-                        <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mt-1">Mystery Box</div>
-                    </div>
                 </div>
 
-                <div class="px-6 pb-6">
-                    <button onclick="closeDailyModal()" class="w-full py-3 rounded-xl font-cinzel font-black text-lg tracking-wider bg-gradient-to-r from-yellow-700 via-yellow-600 to-orange-600 hover:from-yellow-600 hover:via-yellow-500 hover:to-orange-500 text-black shadow-[0_0_20px_rgba(255,165,0,0.4)] hover:shadow-[0_0_30px_rgba(255,165,0,0.6)] transition-all transform hover:scale-[1.02]">
-                        <i class="fa-solid fa-check mr-2"></i> Collect Rewards
+                <div class="px-6 pb-6 flex items-center space-x-3">
+                    <button onclick="closeDailyModal()" class="w-1/3 py-3 rounded-xl font-cinzel font-black text-sm tracking-wider bg-black/40 border border-[var(--panel-border)] text-gray-400 hover:text-white transition-all">
+                        Close
+                    </button>
+                    <button onclick="submitDailyReward()" id="collect-reward-btn" class="w-2/3 py-3 rounded-xl font-cinzel font-black text-lg tracking-wider bg-gradient-to-r from-yellow-700 via-yellow-600 to-orange-600 hover:from-yellow-600 hover:via-yellow-500 hover:to-orange-500 text-black shadow-[0_0_20px_rgba(255,165,0,0.4)] hover:shadow-[0_0_30px_rgba(255,165,0,0.6)] transition-all transform hover:scale-[1.02]">
+                        <i class="fa-solid fa-check mr-2"></i> Collect Now
                     </button>
                 </div>
                 <div class="h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
@@ -1013,10 +1221,25 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
         function claimDailyReward() {
             const btn = document.getElementById('daily-reward-trigger');
             if (btn.classList.contains('claimed')) {
-                // Already claimed — open mystery box modal if user has boxes
-                showMysteryModal();
                 return;
             }
+
+            // Set initial state
+            document.getElementById('modal-coins').innerText = '+200';
+            document.getElementById('modal-diamonds').innerText = '+1';
+            
+            const collectBtn = document.getElementById('collect-reward-btn');
+            collectBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Collect Now';
+            collectBtn.disabled = false;
+
+            // Show modal without claiming yet
+            showDailyModal();
+        }
+
+        function submitDailyReward() {
+            const collectBtn = document.getElementById('collect-reward-btn');
+            collectBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Collecting...';
+            collectBtn.disabled = true;
 
             fetch('{{ route("rewards.daily") }}', {
                 method: 'POST',
@@ -1029,25 +1252,30 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById('modal-coins').innerText = '+' + data.coins;
-                    document.getElementById('modal-diamonds').innerText = '+' + data.diamonds;
-                    document.getElementById('modal-boxes').innerText = '+' + data.box;
-
                     // Update topbar
                     document.getElementById('topbar-coins').innerText = data.new_coins_balance.toLocaleString();
                     document.getElementById('topbar-diamonds').innerText = data.new_diamonds_balance.toLocaleString();
 
                     // Mark button as claimed
+                    const btn = document.getElementById('daily-reward-trigger');
                     btn.classList.add('claimed');
                     const badge = document.getElementById('dr-badge');
                     if (badge) badge.style.display = 'none';
 
-                    // Show modal
-                    showDailyModal();
+                    // Celebration
+                    collectBtn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Claimed!';
                     spawnCoinRain();
+                    
+                    setTimeout(() => {
+                        closeDailyModal();
+                    }, 2000);
                 }
             })
-            .catch(err => console.error('Daily reward error:', err));
+            .catch(err => {
+                console.error('Daily reward error:', err);
+                collectBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Collect Now';
+                collectBtn.disabled = false;
+            });
         }
 
         function showDailyModal() {
@@ -1138,36 +1366,60 @@ class="got-sidebar fixed md:relative top-0 left-0 h-full z-[9999] flex flex-col"
 
         // Auto-claim script removed so user can manually claim the daily reward
     </script>
-    <audio id="bgMusic" loop>
-    <source src="{{ asset('music/theme.mpeg') }}" type="audio/mpeg">
-</audio>
 
-<script>
-document.addEventListener("click", function () {
+    <!-- ====== Logout Confirmation Modal ====== -->
+    <div id="logout-modal" class="fixed inset-0 flex items-center justify-center hidden opacity-0 transition-opacity duration-300" style="z-index: 99999;">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeLogoutModal()"></div>
+        <div class="relative w-full max-w-sm mx-4 transform scale-95 transition-transform duration-300" id="logout-modal-content">
+            <div class="epic-logout-modal rounded-2xl overflow-hidden text-center p-8 transition-all duration-500">
+                <div class="h-1 bg-gradient-to-r from-transparent via-[var(--accent-color)] to-transparent absolute top-0 left-0 right-0"></div>
+                
+                <div class="epic-logout-icon-wrap w-24 h-24 mx-auto rounded-full border-2 flex items-center justify-center mb-6 transition-all duration-500">
+                    <i class="fa-solid fa-person-walking-arrow-right text-5xl text-[var(--text-accent)] drop-shadow-[0_0_15px_var(--text-accent)]"></i>
+                </div>
+                
+                <h2 class="text-3xl font-cinzel font-black text-white mb-3 drop-shadow-md tracking-wider">Depart Realm?</h2>
+                <p class="text-[var(--text-secondary)] font-rajdhani text-[16px] mb-8 leading-relaxed px-2">Are you sure you want to abandon your conquest and return to the mundane world?</p>
+                
+                <div class="flex space-x-4">
+                    <button onclick="closeLogoutModal()" class="flex-1 py-3 rounded-xl font-cinzel font-bold text-sm bg-black/50 border border-[var(--panel-border)] hover:bg-black/80 text-[var(--text-secondary)] hover:text-white hover:border-gray-400 transition-all duration-300">
+                        Remain
+                    </button>
+                    <button onclick="document.getElementById('logout-form').submit()" class="epic-logout-btn flex-1 py-3 rounded-xl font-cinzel font-black text-sm transition-all duration-300 transform">
+                        Depart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    const music = document.getElementById("bgMusic");
-
-    music.volume = 0.3;
-
-    music.play();
-
-}, { once: true });
-
-function toggleMusic(){
-
-    const music = document.getElementById("bgMusic");
-
-    if(music.paused){
-
-        music.play();
-
-    }else{
-
-        music.pause();
-
-    }
-}
-</script>
+    <script>
+        function confirmLogout() {
+            const modal = document.getElementById('logout-modal');
+            const content = document.getElementById('logout-modal-content');
+            modal.classList.remove('hidden');
+            // Trigger reflow for animation
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            content.classList.remove('scale-95');
+        }
+        function closeLogoutModal() {
+            const modal = document.getElementById('logout-modal');
+            const content = document.getElementById('logout-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    </script>
+    <!-- Global Music System -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="{{ asset('music/theme.mpeg') }}" type="audio/mpeg">
+    </audio>
+    <script src="{{ asset('js/music-system.js') }}?v={{ time() }}"></script>
+    <!-- Notification System -->
+    <script src="{{ asset('js/notification-system.js') }}?v={{ time() }}"></script>
     
 </body>
 <script>

@@ -39,38 +39,11 @@ class RewardController extends Controller
 
         DB::beginTransaction();
         try {
-            // Ensure a basic daily mystery box exists in DB
-            $mysteryBox = MysteryBox::firstOrCreate(
-                ['type' => 'daily_login'],
-                [
-                    'name' => 'Daily Mystery Box',
-                    'description' => 'A reward for logging in daily.',
-                    'rarity' => 'common',
-                    'glow_color' => '#ffffff',
-                    'min_coins' => 100,
-                    'max_coins' => 500,
-                    'min_diamonds' => 1,
-                    'max_diamonds' => 5,
-                    'grants_avatar' => false,
-                    'grants_border' => false,
-                    'availability' => 'always',
-                    'is_active' => true,
-                ]
-            );
-
             // Update user balances
             $user->coins += $coinsReward;
             $user->diamonds += $diamondsReward;
             $user->last_reward_claimed_at = now();
             $user->save();
-
-            // Give a mystery box
-            UserBox::create([
-                'user_id' => $user->id,
-                'mystery_box_id' => $mysteryBox->id,
-                'source' => 'daily_reward',
-                'is_opened' => false,
-            ]);
 
             DB::commit();
 
@@ -79,7 +52,6 @@ class RewardController extends Controller
                 'message' => 'Daily Reward Claimed!',
                 'coins' => $coinsReward,
                 'diamonds' => $diamondsReward,
-                'box' => 1,
                 'new_coins_balance' => $user->coins,
                 'new_diamonds_balance' => $user->diamonds
             ]);

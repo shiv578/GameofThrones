@@ -69,6 +69,20 @@ class GameController extends Controller
         // Check for achievements
         app(AchievementController::class)->checkPostGameAchievements($user, $game, $score);
 
+        // Generate post-game notifications
+        try {
+            $previousHighScore = Score::where('user_id', $user->id)
+                ->where('game_id', $game->id)
+                ->where('id', '!=', $score->id)
+                ->max('score') ?? 0;
+            $isNewHighScore = $request->score > $previousHighScore;
+
+            app(\App\Services\NotificationService::class)
+                ->sendPostGameNotification($user->id, $game->name, $xpEarned, $request->score, $isNewHighScore);
+        } catch (\Exception $e) {
+            // Non-critical
+        }
+
         return response()->json([
             'success' => true,
             'xp_earned' => $xpEarned,
