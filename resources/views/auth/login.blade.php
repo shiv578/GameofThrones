@@ -40,13 +40,13 @@ class="got-panel p-6 sm:p-12 w-full max-w-lg rounded-2xl relative overflow-hidde
                         <a class="text-sm text-[var(--text-accent)] hover:underline" href="{{ route('password.request') }}">
                             Forgot password?
                         </a>
-                    @endif
+                     @endif
                 </div>
 
 <div class="pt-6">
 <button type="submit" class="image-login-btn mx-auto block">
-
-    <img 
+  
+    <img   
         id="themeLoginBtn"
         src="{{ asset('images/fire-login.png') }}"               
         alt="Login Button"
