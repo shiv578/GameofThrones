@@ -31,16 +31,18 @@
             transition: all 1s ease-in-out;
         }
         .bg-dragons {
-            background-image: url('/images/dragons-bg.jpg');
-            opacity: 0.3;
+            background-position: center;
+            background-size: cover;
+            transition: all 1s ease-in-out;
         }
         .theme-fire .bg-dragons {
+            background-image: url('/images/dragons-bg.jpg');
             filter: sepia(0.15) saturate(1.3) hue-rotate(345deg) contrast(1.1);
             opacity: 0.4;
         }
         .theme-ice .bg-dragons {
-            filter: saturate(1.3) hue-rotate(195deg) contrast(1.1);
-            opacity: 0.45;
+            background-image: url('/images/ice-dragon-bg.jpg');
+            opacity: 0.8;
         }
         
         .fiery-sword {
