@@ -35,7 +35,7 @@ class="got-panel p-6 sm:p-12 w-full max-w-lg rounded-2xl relative overflow-hidde
                         <input id="remember_me" type="checkbox" class="rounded border-gray-600 bg-gray-900 text-[var(--accent-color)] shadow-sm focus:ring-[var(--accent-color)]" name="remember">
                         <span class="ms-2 text-sm text-[var(--text-secondary)]">Remember me</span>
                     </label>
-
+ 
                     @if (Route::has('password.request'))
                         <a class="text-sm text-[var(--text-accent)] hover:underline" href="{{ route('password.request') }}">
                             Forgot password?
