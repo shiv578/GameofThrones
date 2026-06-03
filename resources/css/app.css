@@ -1089,7 +1089,7 @@
     box-shadow:
         0 0 35px rgba(255, 0, 0, 0.4);
 }
-   
+      
 .leave-btn:hover {
     transform:
          translateY(-5px) scale(1.03);
