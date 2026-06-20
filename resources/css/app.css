@@ -736,6 +736,7 @@
         box-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
     }
 }
+/*  */
 
 .animate-scroll-glow {
     animation: scroll-glow 4s infinite ease-in-out;
