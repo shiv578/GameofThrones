@@ -28,7 +28,7 @@ class="got-panel mx-auto bg-transparent p-6 sm:p-12 w-full max-w-xl rounded-2xl 
                 <input type="hidden" name="house" x-model="house">
                 <input type="hidden" name="character_class" x-model="charClass">
 
-                          <!-- STEP 1: Account Details -->
+                          <!-- STE P 1: Account Details -->
                 <div x-show="step === 1" x-transition.opacity.duration.500ms class="space-y-4">
                     <div class="grid grid-cols-1 gap-4">
                         <div>
