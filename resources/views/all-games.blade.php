@@ -90,6 +90,8 @@
     gap: 6px;
 }
 
+/* tp be upadated here */
+
 .mini-tags span {
     padding: 3px 8px;
     border-radius: 4px;

@@ -40,13 +40,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/games/{slug}', [\App\Http\Controllers\GameController::class, 'show'])->name('games.show');
     Route::post('/games/{slug}/score', [\App\Http\Controllers\GameController::class, 'saveScore'])->name('games.score');
      
-    // Achievements
+     // Achievements
     Route::get('/achievements', [\App\Http\Controllers\AchievementController::class, 'index'])->name('achievements.index');
     
     // Leaderboard
     Route::get('/leaderboards', [\App\Http\Controllers\LeaderboardController::class, 'index'])->name('leaderboards.index');
     
-    // Analytics
+      // Analytics
     Route::get('/analytics', [\App\Http\Controllers\AnalyticsController::class, 'index'])->name('analytics.index');
 
     // Rewards
